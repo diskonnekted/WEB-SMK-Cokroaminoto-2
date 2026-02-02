@@ -1,0 +1,6 @@
+menus
+news
+news_gallery
+pages
+settings
+users

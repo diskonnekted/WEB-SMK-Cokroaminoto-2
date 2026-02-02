@@ -1,0 +1,6 @@
+Structure of pages table:
+id - int(6) unsigned
+title - varchar(255)
+slug - varchar(255)
+content - text
+created_at - timestamp

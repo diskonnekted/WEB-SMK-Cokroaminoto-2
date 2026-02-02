@@ -1,0 +1,47 @@
+[
+    {
+        "id": "1",
+        "title": "Rapat Kerja Tahun Ajaran Baru 2025/2026 Fokus pada Peningkatan Mutu",
+        "category": "Berita Sekolah",
+        "date": "2026-01-23",
+        "image": "https://placehold.co/300x200/eee/333?text=Rapat+Guru",
+        "content": "Dalam rangka mempersiapkan tahun ajaran baru, segenap dewan guru dan staf mengadakan rapat kerja untuk membahas strategi peningkatan mutu pendidikan. Rapat ini dihadiri oleh seluruh elemen sekolah.",
+        "is_featured": false
+    },
+    {
+        "id": "2",
+        "title": "Pelantikan Bantara Gugus Depan SMK Cokroaminoto 2",
+        "category": "Ekstrakurikuler",
+        "date": "2026-01-22",
+        "image": "https://placehold.co/300x200/eee/333?text=Pramuka",
+        "content": "Kegiatan perkemahan sabtu minggu (Persami) dalam rangka pelantikan Bantara berjalan dengan khidmat. Siswa-siswi menunjukkan dedikasi dan semangat kepramukaan yang tinggi.",
+        "is_featured": false
+    },
+    {
+        "id": "3",
+        "title": "Peremajaan Laboratorium Komputer untuk Menunjang Pembelajaran TKJ",
+        "category": "Fasilitas",
+        "date": "2026-01-20",
+        "image": "https://placehold.co/300x200/eee/333?text=Lab+Komputer",
+        "content": "Sekolah terus berkomitmen meningkatkan fasilitas. Kali ini laboratorium komputer mendapat upgrade spesifikasi PC terbaru untuk mendukung praktik siswa jurusan TKJ.",
+        "is_featured": false
+    },
+    {
+        "id": "4",
+        "title": "Kunjungan Industri ke PT. Telkom Indonesia",
+        "category": "Kunjungan Industri",
+        "date": "2026-01-15",
+        "image": "https://placehold.co/400x200/00703c/ffffff?text=Kunjungan+Industri",
+        "content": "Siswa kelas XI melakukan kunjungan industri untuk melihat langsung dunia kerja di bidang telekomunikasi.",
+        "is_featured": true
+    },
+    {
+        "id": "5",
+        "title": "Siswa Meraih Juara 1 LKS Tingkat Kabupaten",
+        "category": "Prestasi",
+        "date": "2026-01-10",
+        "image": "https://placehold.co/400x200/00703c/ffffff?text=Lomba+Kompetensi",
+        "content": "Prestasi membanggakan kembali diraih oleh siswa SMK Cokroaminoto 2 dalam ajang Lomba Kompetensi Siswa (LKS) tingkat kabupaten.",
+        "is_featured": true
+    }
+]
