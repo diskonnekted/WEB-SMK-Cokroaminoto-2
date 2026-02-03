@@ -153,6 +153,11 @@ require_once '../config.php';
                 </a>
             </li>
             <li>
+                <a href="gallery.php" class="<?php echo strpos(basename($_SERVER['PHP_SELF']), 'gallery') !== false ? 'active' : ''; ?>">
+                    <i class="fas fa-images"></i> <span>Galeri Foto</span>
+                </a>
+            </li>
+            <li>
                 <a href="ppdb.php" class="<?php echo strpos(basename($_SERVER['PHP_SELF']), 'ppdb') !== false ? 'active' : ''; ?>">
                     <i class="fas fa-user-graduate"></i> <span>Data PPDB</span>
                 </a>
@@ -160,6 +165,21 @@ require_once '../config.php';
             <li>
                 <a href="settings.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'settings.php' ? 'active' : ''; ?>">
                     <i class="fas fa-cog"></i> <span>Pengaturan</span>
+                </a>
+            </li>
+            <li>
+                <a href="manual.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'manual.php' ? 'active' : ''; ?>">
+                    <i class="fas fa-book"></i> <span>Manual & Panduan</span>
+                </a>
+            </li>
+            <li>
+                <a href="categories.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'categories.php' ? 'active' : ''; ?>">
+                    <i class="fas fa-tags"></i> <span>Kategori</span>
+                </a>
+            </li>
+            <li>
+                <a href="alumni.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'alumni.php' ? 'active' : ''; ?>">
+                    <i class="fas fa-user-graduate"></i> <span>Data Alumni</span>
                 </a>
             </li>
         </ul>
@@ -173,6 +193,8 @@ require_once '../config.php';
                     <strong><?php echo $_SESSION['username']; ?></strong>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
+                    <li><a class="dropdown-item" href="profile.php"><i class="fas fa-user-edit me-2"></i> Edit Profil</a></li>
+                    <li><hr class="dropdown-divider"></li>
                     <li><a class="dropdown-item" href="logout.php"><i class="fas fa-sign-out-alt me-2"></i> Sign out</a></li>
                 </ul>
             </div>

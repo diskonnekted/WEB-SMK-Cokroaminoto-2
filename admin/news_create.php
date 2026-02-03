@@ -127,20 +127,13 @@ if (isset($_POST['save_news'])) {
                     <div class="mb-3">
                         <label class="form-label">Kategori</label>
                         <select class="form-select" name="category" required>
-                            <option value="Berita Sekolah">Berita Sekolah</option>
-                            <option value="Prestasi">Prestasi</option>
-                            <option value="Ekstrakurikuler">Ekstrakurikuler</option>
-                            <option value="Pengumuman">Pengumuman</option>
-                            <option value="Agenda">Agenda</option>
-                            <option value="Artikel">Artikel</option>
-                            <optgroup label="Kompetensi Keahlian">
-                                <option value="Multimedia">Multimedia</option>
-                                <option value="Teknik Mesin">Teknik Mesin</option>
-                                <option value="Teknik Pengelasan">Teknik Pengelasan</option>
-                                <option value="Teknik Elektronika">Teknik Elektronika</option>
-                                <option value="Teknik Otomotif">Teknik Otomotif</option>
-                                <option value="Teknik Ketenagalistrikan">Teknik Ketenagalistrikan</option>
-                            </optgroup>
+                            <option value="">-- Pilih Kategori --</option>
+                            <?php
+                            $cat_q = $conn->query("SELECT name FROM categories WHERE type='news' ORDER BY name ASC");
+                            while($c = $cat_q->fetch_assoc()){
+                                echo '<option value="'.$c['name'].'">'.$c['name'].'</option>';
+                            }
+                            ?>
                         </select>
                     </div>
 

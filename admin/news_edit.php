@@ -151,27 +151,13 @@ while ($row = $g_result->fetch_assoc()) {
                     <div class="mb-3">
                         <label class="form-label">Kategori</label>
                         <select class="form-select" name="category" required>
+                            <option value="">-- Pilih Kategori --</option>
                             <?php
-                            $categories = ['Berita Sekolah', 'Prestasi', 'Ekstrakurikuler', 'Pengumuman', 'Agenda', 'Artikel'];
-                            foreach ($categories as $cat) {
-                                $selected = ($cat == $news['category']) ? 'selected' : '';
-                                echo "<option value='$cat' $selected>$cat</option>";
+                            $cat_q = $conn->query("SELECT name FROM categories WHERE type='news' ORDER BY name ASC");
+                            while($c = $cat_q->fetch_assoc()){
+                                $selected = ($c['name'] == $news['category']) ? 'selected' : '';
+                                echo '<option value="'.$c['name'].'" '.$selected.'>'.$c['name'].'</option>';
                             }
-                            
-                            $competencies = [
-                                'Multimedia',
-                                'Teknik Mesin',
-                                'Teknik Pengelasan',
-                                'Teknik Elektronika',
-                                'Teknik Otomotif',
-                                'Teknik Ketenagalistrikan'
-                            ];
-                            echo '<optgroup label="Kompetensi Keahlian">';
-                            foreach ($competencies as $comp) {
-                                $selected = ($comp == $news['category']) ? 'selected' : '';
-                                echo "<option value='$comp' $selected>$comp</option>";
-                            }
-                            echo '</optgroup>';
                             ?>
                         </select>
                     </div>

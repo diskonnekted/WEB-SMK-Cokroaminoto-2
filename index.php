@@ -123,28 +123,29 @@ while ($row = $result->fetch_assoc()) {
                 <!-- Plugin Widget -->
                 <?php if(file_exists('plugins/quran-radio/widget.php')) include 'plugins/quran-radio/widget.php'; ?>
 
-                <!-- Popular News (Static for now, or random) -->
+                <!-- Popular News (Dynamic) -->
                 <div class="sidebar-widget">
                     <div class="section-title">
                         <h2>Terpopuler</h2>
                     </div>
                     <ul class="popular-list">
-                        <li>
-                            <span class="popular-number">1</span>
-                            <span class="popular-title"><a href="#">Jadwal Ujian Semester Genap Tahun 2026</a></span>
-                        </li>
-                        <li>
-                            <span class="popular-number">2</span>
-                            <span class="popular-title"><a href="#">Prestasi Siswa di Bidang Olahraga Tingkat Provinsi</a></span>
-                        </li>
-                        <li>
-                            <span class="popular-number">3</span>
-                            <span class="popular-title"><a href="#">Info Penerimaan Peserta Didik Baru (PPDB)</a></span>
-                        </li>
-                        <li>
-                            <span class="popular-number">4</span>
-                            <span class="popular-title"><a href="#">Agenda Kegiatan Tengah Semester</a></span>
-                        </li>
+                        <?php
+                        // Fetch popular news (ordered by views DESC)
+                        $pop_sql = "SELECT id, title, views FROM news ORDER BY views DESC LIMIT 4";
+                        $pop_result = $conn->query($pop_sql);
+                        
+                        if ($pop_result->num_rows > 0) {
+                            $rank = 1;
+                            while ($pop = $pop_result->fetch_assoc()) {
+                                echo '<li>';
+                                echo '<span class="popular-number">' . $rank++ . '</span>';
+                                echo '<span class="popular-title"><a href="news_detail.php?id=' . $pop['id'] . '">' . htmlspecialchars($pop['title']) . '</a></span>';
+                                echo '</li>';
+                            }
+                        } else {
+                            echo '<li><span class="text-muted">Belum ada berita populer.</span></li>';
+                        }
+                        ?>
                     </ul>
                 </div>
 
@@ -155,22 +156,22 @@ while ($row = $result->fetch_assoc()) {
                     </div>
                     <ul style="list-style: none;">
                         <li style="margin-bottom: 10px; border-left: 3px solid var(--nu-green); padding-left: 10px;">
-                            <a href="#">Teknik Instalasi Tenaga Listrik</a>
+                            <a href="page.php?slug=teknik-ketenagalistrikan">Teknik Instalasi Tenaga Listrik</a>
                         </li>
                         <li style="margin-bottom: 10px; border-left: 3px solid var(--nu-green); padding-left: 10px;">
-                            <a href="#">Teknik Pemesinan</a>
+                            <a href="page.php?slug=teknik-mesin">Teknik Pemesinan</a>
                         </li>
                         <li style="margin-bottom: 10px; border-left: 3px solid var(--nu-green); padding-left: 10px;">
-                            <a href="#">Teknik Pengelasan</a>
+                            <a href="page.php?slug=teknik-pengelasan">Teknik Pengelasan</a>
                         </li>
                         <li style="margin-bottom: 10px; border-left: 3px solid var(--nu-green); padding-left: 10px;">
-                            <a href="#">Teknik Kendaraan Ringan Otomotif</a>
+                            <a href="page.php?slug=teknik-otomotif">Teknik Kendaraan Ringan Otomotif</a>
                         </li>
                         <li style="margin-bottom: 10px; border-left: 3px solid var(--nu-green); padding-left: 10px;">
-                            <a href="#">Teknik Audio Video</a>
+                            <a href="page.php?slug=teknik-elektronika">Teknik Audio Video</a>
                         </li>
                         <li style="margin-bottom: 10px; border-left: 3px solid var(--nu-green); padding-left: 10px;">
-                            <a href="#">Multimedia</a>
+                            <a href="page.php?slug=multimedia">Multimedia</a>
                         </li>
                     </ul>
                 </div>

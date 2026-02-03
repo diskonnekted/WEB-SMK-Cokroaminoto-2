@@ -97,9 +97,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <button type="submit" class="btn btn-success">Masuk</button>
             </div>
         </form>
-        <div class="text-center mt-3">
-            <small class="text-muted">Default: admin / admin123</small>
-        </div>
     </div>
 
 </body>

@@ -45,9 +45,7 @@ while ($row = $m_result->fetch_assoc()) {
                 ?>
             </div>
             <div class="top-links">
-                <a href="ppdb.php">PPDB Online</a>
-                <a href="#">E-Learning</a>
-                <a href="#">Kontak Kami</a>
+                <a href="contact.php">Kontak Kami</a>
                 <a href="admin/login.php">Login Admin</a>
             </div>
         </div>

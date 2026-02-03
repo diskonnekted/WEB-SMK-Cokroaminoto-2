@@ -1,85 +1,57 @@
 <?php
 require_once 'config.php';
-
-$slug = isset($_GET['slug']) ? $conn->real_escape_string($_GET['slug']) : '';
-
-// Redirect old alumni page to new alumni.php
-if ($slug == 'alumni') {
-    header("Location: alumni.php");
-    exit();
-}
-
 require_once 'header_public.php';
-
-$page = null;
-
-if ($slug) {
-    $result = $conn->query("SELECT * FROM pages WHERE slug = '$slug'");
-    if ($result->num_rows > 0) {
-        $page = $result->fetch_assoc();
-    }
-}
 ?>
 
 <!-- Main Content -->
 <div class="container main-content">
     <div class="content-grid">
         
-        <!-- Left Column (Page Content) -->
+        <!-- Left Column (Content) -->
         <div class="main-column">
-            <div class="card shadow-sm" style="background: white; padding: 30px; border-radius: 4px; border: 1px solid #ddd;">
-                <?php if ($page): ?>
-                    <h1 class="mb-4" style="color: var(--nu-green); border-bottom: 2px solid #eee; padding-bottom: 15px;"><?php echo $page['title']; ?></h1>
-                    <div class="page-content" style="line-height: 1.8;">
-                        <?php echo $page['content']; ?>
-                    </div>
-                <?php else: ?>
-                    <div class="alert alert-warning">
-                        <h3>Halaman Tidak Ditemukan</h3>
-                        <p>Maaf, halaman yang Anda cari tidak tersedia atau telah dihapus.</p>
-                        <a href="index.php" class="btn btn-success" style="display: inline-block; padding: 10px 20px; background: var(--nu-green); color: white; text-decoration: none; margin-top: 10px; border-radius: 4px;">Kembali ke Beranda</a>
-                    </div>
-                <?php endif; ?>
-            </div>
             
-            <?php
-            $category = null;
-            $map = [
-                'multimedia' => 'Multimedia',
-                'teknik-mesin' => 'Teknik Mesin',
-                'teknik-pengelasan' => 'Teknik Pengelasan',
-                'teknik-elektronika' => 'Teknik Elektronika',
-                'teknik-otomotif' => 'Teknik Otomotif',
-                'teknik-ketenagalistrikan' => 'Teknik Ketenagalistrikan',
-            ];
-            if (isset($map[$slug])) {
-                $category = $conn->real_escape_string($map[$slug]);
-                $news_q = $conn->query("SELECT * FROM news WHERE category = '$category' ORDER BY created_at DESC");
-                echo '<div class="section-title" style="margin-top: 20px;"><h2>Berita ' . strtoupper($category) . '</h2></div>';
-                if ($news_q && $news_q->num_rows > 0) {
-                    echo '<div class="news-list">';
-                    while ($news = $news_q->fetch_assoc()) {
-                        $img = $news['image'];
-                        if (!filter_var($img, FILTER_VALIDATE_URL) && !empty($img)) {
-                            $img = $img;
-                        }
-                        echo '<article class="news-item">';
-                        echo '  <div class="news-thumb"><img src="' . htmlspecialchars($img) . '" alt="' . htmlspecialchars($news['title']) . '"></div>';
-                        echo '  <div class="news-content">';
-                        echo '      <div class="news-meta"><span>' . htmlspecialchars($news['category']) . '</span> • ' . indo_date($news['created_at']) . '</div>';
-                        echo '      <h3 class="news-title"><a href="news_detail.php?id=' . intval($news['id']) . '">' . htmlspecialchars($news['title']) . '</a></h3>';
-                        echo '      <p class="news-excerpt">' . substr(strip_tags($news['content']), 0, 150) . '...</p>';
-                        echo '  </div>';
-                        echo '</article>';
-                    }
-                    echo '</div>';
-                } else {
-                    echo '<div class="alert alert-info">Belum ada berita untuk kategori ini.</div>';
-                }
-            }
+            <div class="card shadow-sm mb-4" style="background: white; padding: 30px; border-radius: 4px; border: 1px solid #ddd;">
+                <h1 class="mb-4" style="color: var(--nu-green); border-bottom: 2px solid #eee; padding-bottom: 15px;">Kontak Kami</h1>
+                
+                <div class="page-content" style="line-height: 1.8;">
+                    <p class="mb-4">Terima kasih atas kunjungan Anda ke website SMK Cokroaminoto 2 Banjarnegara. Jika Anda memiliki pertanyaan, saran, atau ingin mendapatkan informasi lebih lanjut mengenai sekolah kami, silakan hubungi kami melalui kontak di bawah ini atau datang langsung ke lokasi kami.</p>
 
-            // Form Alumni
-            ?>
+                    <div class="row mb-5">
+                        <div class="col-md-6">
+                            <h4 style="color: var(--nu-green); margin-bottom: 15px;"><i class="fas fa-map-marker-alt me-2"></i> Alamat</h4>
+                            <p>
+                                <strong>SMK Cokroaminoto 2 Banjarnegara</strong><br>
+                                Jl. Letjend Soeprapto No. 221, Wangon<br>
+                                Kec. Banjarnegara, Kab. Banjarnegara<br>
+                                Jawa Tengah 53417
+                            </p>
+                        </div>
+                        <div class="col-md-6">
+                            <h4 style="color: var(--nu-green); margin-bottom: 15px;"><i class="fas fa-phone-alt me-2"></i> Kontak</h4>
+                            <p>
+                                <i class="fas fa-envelope me-2 text-muted"></i> Email: <a href="mailto:humascorduba@gmail.com" style="color: inherit;">humascorduba@gmail.com</a><br>
+                                <i class="fab fa-instagram me-2 text-muted"></i> Instagram: <a href="https://instagram.com/corduba.official" target="_blank" style="color: inherit;">@corduba.official</a><br>
+                                <i class="fab fa-facebook me-2 text-muted"></i> Facebook: <a href="https://www.facebook.com/p/SMK-Cokroaminoto-2-Banjarnegara-100077484438556/" target="_blank" style="color: inherit;">SMK Cokroaminoto 2 Banjarnegara</a>
+                            </p>
+                        </div>
+                    </div>
+
+                    <h4 style="color: var(--nu-green); margin-bottom: 15px;"><i class="fas fa-map me-2"></i> Peta Lokasi</h4>
+                    <div class="map-container" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3956.887465228087!2d109.6845347758364!3d-7.398863272491178!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e6ff326c5478479%3A0x6a05372333e66974!2sSMK%20Cokroaminoto%202%20Banjarnegara!5e0!3m2!1sid!2sid!4v1700000000000!5m2!1sid!2sid" 
+                            width="100%" 
+                            height="100%" 
+                            style="border:0; position: absolute; top: 0; left: 0;" 
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+
+                </div>
+            </div>
+
         </div>
 
         <!-- Right Column (Sidebar) -->
