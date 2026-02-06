@@ -46,6 +46,7 @@ while ($row = $m_result->fetch_assoc()) {
             </div>
             <div class="top-links">
                 <a href="contact.php">Kontak Kami</a>
+                <a href="calendar.php">Kalender Akademik</a>
                 <a href="admin/login.php">Login Admin</a>
             </div>
         </div>

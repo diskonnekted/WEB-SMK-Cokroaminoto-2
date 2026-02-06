@@ -182,6 +182,16 @@ if (!isset($_SESSION['user_id'])) {
                     <i class="fas fa-user-graduate"></i> <span>Data Alumni</span>
                 </a>
             </li>
+            <li>
+                <a href="jobs.php" class="<?php echo strpos(basename($_SERVER['PHP_SELF']), 'jobs') !== false ? 'active' : ''; ?>">
+                    <i class="fas fa-briefcase"></i> <span>BKK / Lowongan</span>
+                </a>
+            </li>
+            <li>
+                <a href="calendar.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'calendar.php' ? 'active' : ''; ?>">
+                    <i class="fas fa-calendar-alt"></i> <span>Kalender Akademik</span>
+                </a>
+            </li>
         </ul>
         
         <div class="mt-auto pt-3 border-top border-secondary">

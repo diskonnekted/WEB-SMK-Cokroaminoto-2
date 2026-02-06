@@ -35,6 +35,33 @@ if (isset($_POST['register_alumni'])) {
                 </div>
             </div>
 
+            <!-- Job Vacancies Section -->
+            <?php
+            $jobs_q = $conn->query("SELECT * FROM job_vacancies WHERE status = 'active' ORDER BY created_at DESC LIMIT 3");
+            
+            if ($jobs_q && $jobs_q->num_rows > 0) {
+                echo '<div class="section-title" style="margin-top: 20px;"><h2>Info Lowongan Kerja Terbaru</h2></div>';
+                echo '<div class="jobs-list mb-4">';
+                while ($job = $jobs_q->fetch_assoc()) {
+                    echo '<div class="card shadow-sm mb-3 border-0" style="background: white; border-radius: 8px; overflow: hidden; border: 1px solid #eee;">';
+                    echo '  <div class="card-body p-3">';
+                    echo '      <div class="d-flex justify-content-between align-items-center mb-2">';
+                    echo '          <h5 class="mb-0" style="color: var(--nu-green); font-size: 1.1rem;">' . htmlspecialchars($job['title']) . '</h5>';
+                    if ($job['deadline']) {
+                        echo '          <span class="badge bg-danger" style="font-size: 0.8rem;">Deadline: ' . date('d M Y', strtotime($job['deadline'])) . '</span>';
+                    }
+                    echo '      </div>';
+                    echo '      <h6 class="text-muted mb-2">' . htmlspecialchars($job['company']) . '</h6>';
+                    echo '      <p class="mb-2 text-muted small">' . substr(strip_tags($job['description']), 0, 150) . '...</p>';
+                    echo '      <a href="bkk.php" class="btn btn-sm btn-outline-success">Lihat Detail</a>';
+                    echo '  </div>';
+                    echo '</div>';
+                }
+                echo '<div class="text-center mt-3"><a href="bkk.php" class="btn btn-success">Lihat Semua Lowongan</a></div>';
+                echo '</div>';
+            }
+            ?>
+
             <!-- Alumni News Section -->
             <?php
             $category = 'Alumni';

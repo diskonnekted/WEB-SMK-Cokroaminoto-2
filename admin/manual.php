@@ -8,6 +8,57 @@ require_once 'header.php';
 
 <div class="row">
     <div class="col-lg-12">
+
+        <!-- Panduan Mengelola Berita & Artikel -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3 bg-info text-white">
+                <h6 class="m-0 font-weight-bold"><i class="fas fa-newspaper me-2"></i>Panduan Mengelola Berita & Artikel (Termasuk Gambar & Video)</h6>
+            </div>
+            <div class="card-body">
+                <p>Fitur ini digunakan untuk memposting berita sekolah, pengumuman, prestasi siswa, atau artikel lainnya.</p>
+
+                <h5 class="mt-4 mb-3 text-info">Langkah 1: Membuat Berita Baru</h5>
+                <ol>
+                    <li>Klik menu <strong>Berita & Artikel</strong> di sidebar sebelah kiri.</li>
+                    <li>Klik tombol <strong><i class="fas fa-plus"></i> Tambah Berita</strong> di bagian atas halaman.</li>
+                </ol>
+
+                <h5 class="mt-4 mb-3 text-info">Langkah 2: Mengisi Konten</h5>
+                <ul>
+                    <li><strong>Judul Berita:</strong> Isi dengan judul yang menarik dan jelas.</li>
+                    <li><strong>Kategori:</strong> Pilih kategori yang sesuai (Misal: Berita, Pengumuman, Prestasi).</li>
+                    <li><strong>Konten Berita:</strong> Tulis isi berita di kotak editor besar yang tersedia.
+                        <br>
+                        <div class="alert alert-secondary mt-2 mb-2">
+                            <strong>Tips Editor (Summernote):</strong>
+                            <ul class="mb-0 mt-1">
+                                <li><strong>Menambahkan Gambar di Dalam Teks:</strong> 
+                                    Klik ikon <i class="fas fa-image"></i> (Picture) pada toolbar editor &rarr; Pilih file gambar dari komputer &rarr; Gambar akan muncul di antara teks.
+                                </li>
+                                <li><strong>Menambahkan Video (YouTube):</strong> 
+                                    Klik ikon <i class="fas fa-video"></i> (Video) pada toolbar editor &rarr; Tempelkan (Paste) Link YouTube &rarr; Klik Insert. Video akan muncul di dalam artikel.
+                                </li>
+                                <li><strong>Format Teks:</strong> Gunakan ikon <b>B</b> (Bold), <i>I</i> (Italic), atau Heading (H1, H2) untuk merapikan tulisan.</li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+
+                <h5 class="mt-4 mb-3 text-info">Langkah 3: Gambar Utama & Penerbitan</h5>
+                <ul>
+                    <li><strong>Gambar Utama (Thumbnail):</strong> Klik "Choose File" untuk mengupload gambar sampul berita.
+                        <br><small class="text-muted">Gambar ini yang akan muncul di halaman depan (Home) dan daftar berita. Gunakan gambar orientasi Landscape (mendatar) untuk hasil terbaik.</small>
+                    </li>
+                    <li><strong>Status:</strong>
+                        <ul>
+                            <li><code>Published</code>: Berita langsung tampil di website publik.</li>
+                            <li><code>Draft</code>: Berita hanya disimpan di admin, belum tampil di publik.</li>
+                        </ul>
+                    </li>
+                    <li>Klik tombol <strong>Simpan Berita</strong> untuk menyelesaikan.</li>
+                </ul>
+            </div>
+        </div>
         
         <!-- Panduan Membuat Sub Menu -->
         <div class="card shadow mb-4">
