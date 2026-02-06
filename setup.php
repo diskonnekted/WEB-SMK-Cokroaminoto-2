@@ -88,7 +88,7 @@ $settings = [
     'kepsek_name' => 'Drs. H. Nama Kepsek',
     'kepsek_message' => 'Selamat datang di website resmi SMK Cokroaminoto 2 Banjarnegara. Kami berkomitmen mencetak generasi unggul.',
     'hero_title' => 'SMK Cokroaminoto 2 Banjarnegara Siap Cetak Lulusan Kompeten di Era Digital',
-    'hero_image' => 'https://placehold.co/800x400/008f4c/ffffff?text=Kegiatan+Upacara+Bendera'
+    'hero_image' => 'images/placeholder.jpg'
 ];
 
 foreach ($settings as $key => $value) {
@@ -104,7 +104,7 @@ $news_data = [
         "Rapat Kerja Tahun Ajaran Baru 2025/2026 Fokus pada Peningkatan Mutu",
         "rapat-kerja-2025",
         "Berita Sekolah",
-        "https://placehold.co/300x200/eee/333?text=Rapat+Guru",
+        "images/placeholder.jpg",
         "Dalam rangka mempersiapkan tahun ajaran baru, segenap dewan guru dan staf mengadakan rapat kerja untuk membahas strategi peningkatan mutu pendidikan. Rapat ini dihadiri oleh seluruh elemen sekolah.",
         0
     ],
@@ -112,7 +112,7 @@ $news_data = [
         "Pelantikan Bantara Gugus Depan SMK Cokroaminoto 2",
         "pelantikan-bantara",
         "Ekstrakurikuler",
-        "https://placehold.co/300x200/eee/333?text=Pramuka",
+        "images/placeholder.jpg",
         "Kegiatan perkemahan sabtu minggu (Persami) dalam rangka pelantikan Bantara berjalan dengan khidmat. Siswa-siswi menunjukkan dedikasi dan semangat kepramukaan yang tinggi.",
         0
     ],
@@ -120,23 +120,23 @@ $news_data = [
         "Peremajaan Laboratorium Komputer untuk Menunjang Pembelajaran TKJ",
         "peremajaan-lab-komputer",
         "Fasilitas",
-        "https://placehold.co/300x200/eee/333?text=Lab+Komputer",
+        "images/placeholder.jpg",
         "Sekolah terus berkomitmen meningkatkan fasilitas. Kali ini laboratorium komputer mendapat upgrade spesifikasi PC terbaru untuk mendukung praktik siswa jurusan TKJ.",
         0
     ],
     [
-        "Kunjungan Industri ke PT. Telkom Indonesia",
+        "Kunjungan Industri ke PT. Telkom Indonesia",  
         "kunjungan-industri-telkom",
         "Kunjungan Industri",
-        "https://placehold.co/400x200/00703c/ffffff?text=Kunjungan+Industri",
+        "images/placeholder.jpg",
         "Siswa kelas XI melakukan kunjungan industri untuk melihat langsung dunia kerja di bidang telekomunikasi.",
         1
     ],
     [
-        "Siswa Meraih Juara 1 LKS Tingkat Kabupaten",
+        "Siswa Meraih Juara 1 LKS Tingkat Kabupaten",  
         "juara-lks-kabupaten",
         "Prestasi",
-        "https://placehold.co/400x200/00703c/ffffff?text=Lomba+Kompetensi",
+        "images/placeholder.jpg",
         "Prestasi membanggakan kembali diraih oleh siswa SMK Cokroaminoto 2 dalam ajang Lomba Kompetensi Siswa (LKS) tingkat kabupaten.",
         1
     ]

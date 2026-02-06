@@ -10,3 +10,4 @@ thumbs.db
 *.tmp
 temp_*.php
 update_log.txt
+tmp/

@@ -88,7 +88,7 @@ if ($slug) {
             <!-- Kepala Sekolah Widget -->
             <div class="sidebar-widget">
                 <div style="text-align: center;">
-                    <img src="<?php echo $settings['kepsek_image'] ?? 'https://placehold.co/150x150/008f4c/ffffff?text=Kepsek'; ?>" alt="Kepala Sekolah" style="margin-bottom: 15px; width: 100%; height: auto; object-fit: cover;">
+                    <img src="<?php echo $settings['kepsek_image'] ?? 'images/placeholder.jpg'; ?>" alt="Kepala Sekolah" style="margin-bottom: 15px; width: 100%; height: auto; object-fit: cover;">
                     <h4 style="color: var(--nu-green);"><?php echo $settings['kepsek_name'] ?? 'Kepala Sekolah'; ?></h4>
                     <p style="font-size: 0.9rem; color: #666; margin-top: 10px;">"<?php echo $settings['kepsek_message'] ?? 'Selamat Datang'; ?>"</p>
                 </div>

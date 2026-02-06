@@ -48,11 +48,13 @@ while ($row = $result->fetch_assoc()) {
                     $main_hero = $hero_news[0]; 
                     ?>
                     <div class="hero-main">
-                        <img src="<?php echo $main_hero['image']; ?>" alt="<?php echo $main_hero['title']; ?>">
-                        <div class="hero-overlay">
-                            <span style="background: #f39c12; padding: 2px 8px; border-radius: 3px; font-size: 12px; font-weight: bold; margin-bottom: 5px; display: inline-block;">UTAMA</span>
-                            <h2><?php echo $main_hero['title']; ?></h2>
-                        </div>
+                        <a href="news_detail.php?id=<?php echo $main_hero['id']; ?>" style="text-decoration: none; color: inherit; display: block; height: 100%;">
+                            <img src="<?php echo $main_hero['image']; ?>" alt="<?php echo $main_hero['title']; ?>">
+                            <div class="hero-overlay">
+                                <span style="background: #f39c12; padding: 2px 8px; border-radius: 3px; font-size: 12px; font-weight: bold; margin-bottom: 5px; display: inline-block;">UTAMA</span>
+                                <h2><?php echo $main_hero['title']; ?></h2>
+                            </div>
+                        </a>
                     </div>
 
                     <?php 
@@ -61,10 +63,12 @@ while ($row = $result->fetch_assoc()) {
                         $sub1 = $hero_news[1];
                     ?>
                     <div class="hero-sub">
-                        <img src="<?php echo $sub1['image']; ?>" alt="<?php echo $sub1['title']; ?>">
-                        <div class="hero-sub-content">
-                            <h4><?php echo $sub1['title']; ?></h4>
-                        </div>
+                        <a href="news_detail.php?id=<?php echo $sub1['id']; ?>" style="text-decoration: none; color: inherit; display: block; height: 100%;">
+                            <img src="<?php echo $sub1['image']; ?>" alt="<?php echo $sub1['title']; ?>">
+                            <div class="hero-sub-content">
+                                <h4><?php echo $sub1['title']; ?></h4>
+                            </div>
+                        </a>
                     </div>
                     <?php endif; ?>
 
@@ -74,10 +78,12 @@ while ($row = $result->fetch_assoc()) {
                         $sub2 = $hero_news[2];
                     ?>
                     <div class="hero-sub">
-                        <img src="<?php echo $sub2['image']; ?>" alt="<?php echo $sub2['title']; ?>">
-                        <div class="hero-sub-content">
-                            <h4><?php echo $sub2['title']; ?></h4>
-                        </div>
+                        <a href="news_detail.php?id=<?php echo $sub2['id']; ?>" style="text-decoration: none; color: inherit; display: block; height: 100%;">
+                            <img src="<?php echo $sub2['image']; ?>" alt="<?php echo $sub2['title']; ?>">
+                            <div class="hero-sub-content">
+                                <h4><?php echo $sub2['title']; ?></h4>
+                            </div>
+                        </a>
                     </div>
                     <?php endif; ?>
                 </div>
@@ -92,7 +98,9 @@ while ($row = $result->fetch_assoc()) {
                     <?php foreach ($latest_news as $news): ?>
                     <article class="news-item">
                         <div class="news-thumb">
-                            <img src="<?php echo $news['image']; ?>" alt="<?php echo $news['title']; ?>">
+                            <a href="news_detail.php?id=<?php echo $news['id']; ?>">
+                                <img src="<?php echo $news['image']; ?>" alt="<?php echo $news['title']; ?>">
+                            </a>
                         </div>
                         <div class="news-content">
                             <div class="news-meta">
@@ -114,7 +122,7 @@ while ($row = $result->fetch_assoc()) {
                 <div class="sidebar-widget">
 
                     <div style="text-align: center;">
-                        <img src="<?php echo $settings['kepsek_image'] ?? 'https://placehold.co/150x150/008f4c/ffffff?text=Kepsek'; ?>" alt="Kepala Sekolah" style="margin-bottom: 15px; width: 100%; height: auto; object-fit: cover;">
+                        <img src="<?php echo $settings['kepsek_image'] ?? 'images/placeholder.jpg'; ?>" alt="Kepala Sekolah" style="margin-bottom: 15px; width: 100%; height: auto; object-fit: cover;">
                         <h4 style="color: var(--nu-green);"><?php echo $settings['kepsek_name'] ?? 'Kepala Sekolah'; ?></h4>
                         <p style="font-size: 0.9rem; color: #666; margin-top: 10px;">"<?php echo $settings['kepsek_message'] ?? 'Selamat Datang'; ?>"</p>
                     </div>

@@ -1,10 +1,10 @@
 <?php
+require_once '../config.php';
 session_start();
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit;
 }
-require_once '../config.php';
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -132,7 +132,7 @@ require_once '../config.php';
     <!-- Sidebar -->
     <div class="sidebar d-flex flex-column flex-shrink-0 p-3" style="width: 280px;">
         <a href="../index.php" target="_blank" class="d-flex align-items-center mb-4 text-decoration-none brand-logo">
-            <img src="../images/logo.png" alt="Logo" class="me-2" style="width: 40px; height: auto;">
+            <img src="../images/logocokro2.png" alt="Logo" class="me-2" style="width: 40px; height: auto;">
             <span class="fs-4">Admin</span>
         </a>
         

@@ -210,6 +210,16 @@ ul {
     color: var(--white);
 }
 
+.hero-overlay h2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin: 0;
+    line-height: 1.3;
+    max-height: 2.6em; /* Fallback */
+}
+
 .hero-sub {
     background: var(--white);
     border-radius: 8px;
@@ -225,6 +235,16 @@ ul {
 
 .hero-sub-content {
     padding: 15px;
+}
+
+.hero-sub-content h4 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin: 0;
+    max-height: 3.2em; /* Fallback based on line-height ~1.6 * 2 lines */
+    line-height: 1.6; /* Ensure line height is consistent */
 }
 
 /* Section Titles */
@@ -281,6 +301,11 @@ ul {
     font-weight: 700;
     margin-bottom: 8px;
     line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    max-height: 2.8em; /* Fallback: 1.4 * 2 */
 }
 
 .news-excerpt {

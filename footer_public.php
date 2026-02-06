@@ -4,7 +4,7 @@
         <div class="footer-grid">
             <div class="footer-col">
                 <div class="footer-logo mb-3">
-                    <img src="images/logo.png" alt="Logo SMK Cokroaminoto 2" style="max-width: 120px; height: auto; display: block;">
+                    <img src="images/logocokro2.png" alt="Logo SMK Cokroaminoto 2" style="max-width: 120px; height: auto; display: block;">
                 </div>
                 <h3>SMK Cokroaminoto 2</h3>
                 <p>Mencetak lulusan yang kompeten, berakhlak mulia, dan siap kerja. Sekolah berbasis nilai-nilai keislaman dan kebangsaan.</p>

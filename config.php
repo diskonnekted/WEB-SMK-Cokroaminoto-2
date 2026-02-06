@@ -1,4 +1,11 @@
 <?php
+// Set session save path to local project tmp directory to avoid permission issues
+$session_save_path = __DIR__ . '/tmp';
+if (!file_exists($session_save_path)) {
+    mkdir($session_save_path, 0777, true);
+}
+session_save_path($session_save_path);
+
 $host = 'localhost';
 $user = 'root';
 $pass = '';

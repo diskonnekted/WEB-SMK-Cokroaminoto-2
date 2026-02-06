@@ -54,7 +54,7 @@ while ($row = $m_result->fetch_assoc()) {
     <!-- Logo Section -->
     <div class="logo-section">
         <div class="container">
-            <img src="images/logo.png" alt="Logo SMK Cokroaminoto 2" class="school-logo">
+            <img src="images/logocokro2.png" alt="Logo SMK Cokroaminoto 2" class="school-logo">
             <div class="logo-text">
                 <h1><?php echo $settings['school_name'] ?? 'SMK COKROAMINOTO 2'; ?></h1>
                 <span><?php echo $settings['school_sub_name'] ?? 'BANJARNEGARA'; ?></span>
