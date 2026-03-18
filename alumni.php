@@ -4,14 +4,16 @@ require_once 'header_public.php';
 // Handle Alumni Registration
 $alumni_msg = '';
 if (isset($_POST['register_alumni'])) {
+    $nik = $conn->real_escape_string($_POST['nik']);
     $name = $conn->real_escape_string($_POST['name']);
     $grad_year = $conn->real_escape_string($_POST['grad_year']);
+    $major = $conn->real_escape_string($_POST['major']);
     $phone = $conn->real_escape_string($_POST['phone']);
     $email = $conn->real_escape_string($_POST['email']);
     $job = $conn->real_escape_string($_POST['job']);
     $address = $conn->real_escape_string($_POST['address']);
     
-    $sql_alumni = "INSERT INTO alumni (name, graduation_year, phone, email, current_job, address, status) VALUES ('$name', '$grad_year', '$phone', '$email', '$job', '$address', 'pending')";
+    $sql_alumni = "INSERT INTO alumni (nik, name, graduation_year, major, phone, email, current_job, address, status) VALUES ('$nik', '$name', '$grad_year', '$major', '$phone', '$email', '$job', '$address', 'pending')";
     
     if ($conn->query($sql_alumni) === TRUE) {
         $alumni_msg = '<div class="alert alert-success">Terima kasih! Data Anda telah berhasil dikirim dan menunggu verifikasi admin.</div>';
@@ -99,14 +101,32 @@ if (isset($_POST['register_alumni'])) {
                 
                 <form method="POST" action="">
                     <input type="hidden" name="register_alumni" value="1">
-                    <div class="mb-3">
-                        <label class="form-label">Nama Lengkap</label>
-                        <input type="text" class="form-control" name="name" required placeholder="Nama lengkap sesuai ijazah">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">NIK (Nomor Induk Kependudukan)</label>
+                            <input type="text" class="form-control" name="nik" required placeholder="16 digit NIK" minlength="16" maxlength="16">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Nama Lengkap</label>
+                            <input type="text" class="form-control" name="name" required placeholder="Nama lengkap sesuai ijazah">
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Tahun Lulus</label>
                             <input type="number" class="form-control" name="grad_year" required min="1900" max="2099" placeholder="Contoh: 2023">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Jurusan</label>
+                            <select class="form-select" name="major" required>
+                                <option value="" selected disabled>Pilih Jurusan...</option>
+                                <option value="Teknik Instalasi Tenaga Listrik">Teknik Instalasi Tenaga Listrik</option>
+                                <option value="Teknik Pemesinan">Teknik Pemesinan</option>
+                                <option value="Teknik Pengelasan">Teknik Pengelasan</option>
+                                <option value="Teknik Kendaraan Ringan Otomotif">Teknik Kendaraan Ringan Otomotif</option>
+                                <option value="Teknik Audio Video">Teknik Audio Video</option>
+                                <option value="Desain Komunikasi Visual">Desain Komunikasi Visual (Multimedia)</option>
+                            </select>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Nomor HP / WhatsApp</label>

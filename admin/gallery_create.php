@@ -1,45 +1,42 @@
 <?php
 require_once 'header.php';
 
-// Predefined Categories
-// Removed hardcoded categories in favor of DB categories
-
-if (isset($_POST['save_gallery'])) {
+if (isset($_POST['save_album'])) {
     $title = $conn->real_escape_string($_POST['title']);
+    $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $title)));
     $category = $conn->real_escape_string($_POST['category']);
     $description = $conn->real_escape_string($_POST['description']);
     
-    // Handle Image Upload
+    // Handle Cover Image Upload (Optional)
     $image_url = '';
     
-    if (isset($_FILES['image_file']) && $_FILES['image_file']['error'] == 0) {
+    if (isset($_FILES['cover_image']) && $_FILES['cover_image']['error'] == 0) {
         $target_dir = "../uploads/gallery/";
         if (!file_exists($target_dir)) mkdir($target_dir, 0777, true);
         
-        $file_ext = strtolower(pathinfo($_FILES['image_file']['name'], PATHINFO_EXTENSION));
+        $file_ext = strtolower(pathinfo($_FILES['cover_image']['name'], PATHINFO_EXTENSION));
         $new_filename = time() . '_' . uniqid() . '.' . $file_ext;
         $target_file = $target_dir . $new_filename;
         
         $allowed_types = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
         
         if (in_array($file_ext, $allowed_types)) {
-            if (move_uploaded_file($_FILES['image_file']['tmp_name'], $target_file)) {
+            if (move_uploaded_file($_FILES['cover_image']['tmp_name'], $target_file)) {
                 $image_url = 'uploads/gallery/' . $new_filename;
             } else {
-                $error = "Gagal mengupload gambar.";
+                $error = "Gagal mengupload cover gambar.";
             }
         } else {
             $error = "Format gambar tidak didukung.";
         }
-    } else {
-        $error = "Harap pilih gambar untuk diupload.";
     }
-
+    
     if (!isset($error)) {
-        $sql = "INSERT INTO gallery (title, category, image_path, description) VALUES ('$title', '$category', '$image_url', '$description')";
+        $sql = "INSERT INTO gallery_albums (title, slug, category, description, cover_image) VALUES ('$title', '$slug', '$category', '$description', '$image_url')";
         
         if ($conn->query($sql)) {
-            echo "<script>alert('Foto berhasil ditambahkan!'); window.location.href='gallery.php';</script>";
+            $album_id = $conn->insert_id;
+            echo "<script>alert('Album berhasil dibuat! Silakan tambahkan foto.'); window.location.href='gallery_photos.php?id=$album_id';</script>";
         } else {
             $error = "Database Error: " . $conn->error;
         }
@@ -48,7 +45,7 @@ if (isset($_POST['save_gallery'])) {
 ?>
 
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2 class="h3 mb-0 text-gray-800">Tambah Foto Galeri</h2>
+    <h2 class="h3 mb-0 text-gray-800">Buat Album Baru</h2>
     <a href="gallery.php" class="btn btn-secondary"><i class="fas fa-arrow-left me-2"></i>Kembali</a>
 </div>
 
@@ -60,7 +57,7 @@ if (isset($_POST['save_gallery'])) {
     <div class="card-body">
         <form action="" method="POST" enctype="multipart/form-data">
             <div class="mb-3">
-                <label class="form-label">Judul Foto <span class="text-danger">*</span></label>
+                <label class="form-label">Judul Album <span class="text-danger">*</span></label>
                 <input type="text" name="title" class="form-control" required placeholder="Contoh: Kegiatan Upacara Bendera">
             </div>
 
@@ -78,18 +75,18 @@ if (isset($_POST['save_gallery'])) {
             </div>
 
             <div class="mb-3">
-                <label class="form-label">Upload Foto <span class="text-danger">*</span></label>
-                <input type="file" name="image_file" class="form-control" required accept="image/*">
-                <div class="form-text">Format yang didukung: JPG, JPEG, PNG, GIF, WEBP. Maksimal 2MB disarankan.</div>
+                <label class="form-label">Cover Album (Opsional)</label>
+                <input type="file" name="cover_image" class="form-control" accept="image/*">
+                <div class="form-text">Jika dikosongkan, akan otomatis menggunakan foto pertama yang diupload nanti.</div>
             </div>
 
             <div class="mb-3">
-                <label class="form-label">Deskripsi Singkat</label>
-                <textarea name="description" class="form-control" rows="3" placeholder="Deskripsi singkat tentang foto ini..."></textarea>
+                <label class="form-label">Deskripsi Album</label>
+                <textarea name="description" class="form-control" rows="3" placeholder="Deskripsi singkat tentang album ini..."></textarea>
             </div>
 
             <div class="mt-4">
-                <button type="submit" name="save_gallery" class="btn btn-primary"><i class="fas fa-save me-2"></i>Simpan Galeri</button>
+                <button type="submit" name="save_album" class="btn btn-primary"><i class="fas fa-save me-2"></i>Simpan & Lanjut Upload Foto</button>
             </div>
         </form>
     </div>

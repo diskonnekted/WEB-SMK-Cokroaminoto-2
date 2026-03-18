@@ -3,16 +3,16 @@ require_once 'header_public.php';
 
 // Get Categories
 $categories = [];
-$cat_result = $conn->query("SELECT DISTINCT category FROM gallery ORDER BY category ASC");
+$cat_result = $conn->query("SELECT DISTINCT category FROM gallery_albums ORDER BY category ASC");
 while ($row = $cat_result->fetch_assoc()) {
     $categories[] = $row['category'];
 }
 
-// Get All Images
-$gallery_items = [];
-$result = $conn->query("SELECT * FROM gallery ORDER BY created_at DESC");
+// Get Albums with Photo Count
+$albums = [];
+$result = $conn->query("SELECT a.*, (SELECT COUNT(*) FROM gallery_photos WHERE album_id = a.id) as photo_count FROM gallery_albums a ORDER BY a.created_at DESC");
 while ($row = $result->fetch_assoc()) {
-    $gallery_items[] = $row;
+    $albums[] = $row;
 }
 ?>
 
@@ -75,6 +75,16 @@ while ($row = $result->fetch_assoc()) {
     .gallery-item:hover .gallery-overlay {
         opacity: 1;
     }
+    .album-badge {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        background: rgba(0,0,0,0.6);
+        color: white;
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+    }
 </style>
 
 <div class="container main-content mt-4">
@@ -93,22 +103,44 @@ while ($row = $result->fetch_assoc()) {
     </div>
 
     <div class="row gallery-container">
-        <?php if (empty($gallery_items)): ?>
+        <?php if (empty($albums)): ?>
             <div class="col-12 text-center py-5">
                 <div class="alert alert-info">
-                    <i class="fas fa-info-circle me-2"></i> Belum ada foto di galeri. Silakan tambahkan foto melalui halaman Admin.
+                    <i class="fas fa-info-circle me-2"></i> Belum ada album galeri.
                 </div>
             </div>
         <?php else: ?>
-            <?php foreach ($gallery_items as $item): ?>
-            <div class="col-md-4 col-sm-6 gallery-item animate__animated animate__fadeIn" data-category="<?php echo htmlspecialchars($item['category']); ?>">
-                <div class="gallery-img-wrap">
-                    <img src="<?php echo htmlspecialchars($item['image_path']); ?>" alt="<?php echo htmlspecialchars($item['title']); ?>">
-                    <a href="<?php echo htmlspecialchars($item['image_path']); ?>" class="gallery-overlay text-decoration-none" target="_blank">
-                        <h5 class="fw-bold mb-2"><?php echo htmlspecialchars($item['title']); ?></h5>
-                        <small class="d-block mb-3 text-white-50"><?php echo htmlspecialchars($item['category']); ?></small>
-                        <span class="btn btn-light btn-sm rounded-pill px-3">Lihat Full</span>
+            <?php foreach ($albums as $album): ?>
+            <div class="col-md-4 col-sm-6 gallery-item" data-category="<?php echo htmlspecialchars($album['category']); ?>">
+                <div class="card h-100 border-0 shadow-sm">
+                    <a href="gallery_detail.php?id=<?php echo $album['id']; ?>" class="gallery-img-wrap d-block">
+                        <?php if (!empty($album['cover_image']) && file_exists($album['cover_image'])): ?>
+                            <img src="<?php echo $album['cover_image']; ?>" alt="<?php echo htmlspecialchars($album['title']); ?>">
+                        <?php else: ?>
+                            <img src="images/placeholder.jpg" alt="No Cover">
+                        <?php endif; ?>
+                        
+                        <div class="gallery-overlay">
+                            <h5 class="fw-bold mb-2"><?php echo htmlspecialchars($album['title']); ?></h5>
+                            <span class="btn btn-sm btn-light rounded-pill px-3">Lihat Album</span>
+                        </div>
+                        
+                        <div class="album-badge">
+                            <i class="fas fa-camera me-1"></i> <?php echo $album['photo_count']; ?> Foto
+                        </div>
                     </a>
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold mb-1">
+                            <a href="gallery_detail.php?id=<?php echo $album['id']; ?>" class="text-dark text-decoration-none hover-primary">
+                                <?php echo htmlspecialchars($album['title']); ?>
+                            </a>
+                        </h5>
+                        <p class="card-text text-muted small mb-2"><?php echo substr(htmlspecialchars($album['description']), 0, 80) . (strlen($album['description']) > 80 ? '...' : ''); ?></p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="badge bg-secondary rounded-pill"><?php echo htmlspecialchars($album['category']); ?></span>
+                            <small class="text-muted"><?php echo date('d M Y', strtotime($album['created_at'])); ?></small>
+                        </div>
+                    </div>
                 </div>
             </div>
             <?php endforeach; ?>
@@ -119,26 +151,30 @@ while ($row = $result->fetch_assoc()) {
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const filterBtns = document.querySelectorAll('.gallery-filter-btn');
-    const galleryItems = document.querySelectorAll('.gallery-item');
+    const items = document.querySelectorAll('.gallery-item');
 
     filterBtns.forEach(btn => {
-        btn.addEventListener('click', function() {
+        btn.addEventListener('click', () => {
             // Remove active class from all buttons
             filterBtns.forEach(b => b.classList.remove('active'));
             // Add active class to clicked button
-            this.classList.add('active');
+            btn.classList.add('active');
 
-            const filterValue = this.getAttribute('data-filter');
+            const filterValue = btn.getAttribute('data-filter');
 
-            galleryItems.forEach(item => {
+            items.forEach(item => {
                 if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
                     item.style.display = 'block';
-                    // Re-trigger animation
-                    item.classList.remove('animate__fadeIn');
-                    void item.offsetWidth; // trigger reflow
-                    item.classList.add('animate__fadeIn');
+                    setTimeout(() => {
+                        item.style.opacity = '1';
+                        item.style.transform = 'translateY(0)';
+                    }, 50);
                 } else {
-                    item.style.display = 'none';
+                    item.style.opacity = '0';
+                    item.style.transform = 'translateY(20px)';
+                    setTimeout(() => {
+                        item.style.display = 'none';
+                    }, 300);
                 }
             });
         });

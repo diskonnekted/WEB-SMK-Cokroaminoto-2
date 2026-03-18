@@ -7,7 +7,7 @@ if (!isset($_GET['id'])) {
 }
 
 $id = intval($_GET['id']);
-$result = $conn->query("SELECT * FROM gallery WHERE id = $id");
+$result = $conn->query("SELECT * FROM gallery_albums WHERE id = $id");
 
 if ($result->num_rows == 0) {
     echo "<script>window.location.href='gallery.php';</script>";
@@ -16,31 +16,29 @@ if ($result->num_rows == 0) {
 
 $item = $result->fetch_assoc();
 
-// Predefined Categories
-// Removed hardcoded categories in favor of DB categories
-
-if (isset($_POST['update_gallery'])) {
+if (isset($_POST['update_album'])) {
     $title = $conn->real_escape_string($_POST['title']);
+    $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $title)));
     $category = $conn->real_escape_string($_POST['category']);
     $description = $conn->real_escape_string($_POST['description']);
-    $image_url = $item['image_path']; // Default to existing image
+    $image_url = $item['cover_image']; // Default to existing image
     
     // Handle Image Upload if provided
-    if (isset($_FILES['image_file']) && $_FILES['image_file']['error'] == 0) {
+    if (isset($_FILES['cover_image']) && $_FILES['cover_image']['error'] == 0) {
         $target_dir = "../uploads/gallery/";
         if (!file_exists($target_dir)) mkdir($target_dir, 0777, true);
         
-        $file_ext = strtolower(pathinfo($_FILES['image_file']['name'], PATHINFO_EXTENSION));
+        $file_ext = strtolower(pathinfo($_FILES['cover_image']['name'], PATHINFO_EXTENSION));
         $new_filename = time() . '_' . uniqid() . '.' . $file_ext;
         $target_file = $target_dir . $new_filename;
         
         $allowed_types = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
         
         if (in_array($file_ext, $allowed_types)) {
-            if (move_uploaded_file($_FILES['image_file']['tmp_name'], $target_file)) {
+            if (move_uploaded_file($_FILES['cover_image']['tmp_name'], $target_file)) {
                 // Delete old image if exists
-                if (file_exists('../' . $item['image_path'])) {
-                    unlink('../' . $item['image_path']);
+                if (!empty($item['cover_image']) && file_exists('../' . $item['cover_image'])) {
+                    unlink('../' . $item['cover_image']);
                 }
                 $image_url = 'uploads/gallery/' . $new_filename;
             } else {
@@ -52,10 +50,10 @@ if (isset($_POST['update_gallery'])) {
     }
 
     if (!isset($error)) {
-        $sql = "UPDATE gallery SET title='$title', category='$category', image_path='$image_url', description='$description' WHERE id=$id";
+        $sql = "UPDATE gallery_albums SET title='$title', slug='$slug', category='$category', cover_image='$image_url', description='$description' WHERE id=$id";
         
         if ($conn->query($sql)) {
-            echo "<script>alert('Foto berhasil diperbarui!'); window.location.href='gallery.php';</script>";
+            echo "<script>alert('Album berhasil diperbarui!'); window.location.href='gallery.php';</script>";
         } else {
             $error = "Database Error: " . $conn->error;
         }
@@ -64,7 +62,7 @@ if (isset($_POST['update_gallery'])) {
 ?>
 
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2 class="h3 mb-0 text-gray-800">Edit Foto Galeri</h2>
+    <h2 class="h3 mb-0 text-gray-800">Edit Album Galeri</h2>
     <a href="gallery.php" class="btn btn-secondary"><i class="fas fa-arrow-left me-2"></i>Kembali</a>
 </div>
 
@@ -78,7 +76,7 @@ if (isset($_POST['update_gallery'])) {
             <div class="row">
                 <div class="col-md-8">
                     <div class="mb-3">
-                        <label class="form-label">Judul Foto <span class="text-danger">*</span></label>
+                        <label class="form-label">Judul Album <span class="text-danger">*</span></label>
                         <input type="text" name="title" class="form-control" required value="<?php echo htmlspecialchars($item['title']); ?>">
                     </div>
 
@@ -97,29 +95,41 @@ if (isset($_POST['update_gallery'])) {
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">Upload Foto Baru (Opsional)</label>
-                        <input type="file" name="image_file" class="form-control" accept="image/*">
-                        <div class="form-text">Biarkan kosong jika tidak ingin mengganti foto.</div>
+                        <label class="form-label">Upload Cover Baru (Opsional)</label>
+                        <input type="file" name="cover_image" class="form-control" accept="image/*">
+                        <div class="form-text">Biarkan kosong jika tidak ingin mengubah cover.</div>
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">Deskripsi Singkat</label>
-                        <textarea name="description" class="form-control" rows="3"><?php echo htmlspecialchars($item['description']); ?></textarea>
+                        <label class="form-label">Deskripsi Album</label>
+                        <textarea name="description" class="form-control" rows="5"><?php echo htmlspecialchars($item['description']); ?></textarea>
                     </div>
                 </div>
+                
                 <div class="col-md-4">
-                    <label class="form-label">Foto Saat Ini</label>
                     <div class="card">
-                        <img src="../<?php echo $item['image_path']; ?>" class="card-img-top" alt="Current Image">
-                        <div class="card-body text-center">
-                            <small class="text-muted">Preview Gambar</small>
+                        <div class="card-header py-2">
+                            <h6 class="m-0 font-weight-bold text-primary">Cover Saat Ini</h6>
                         </div>
+                        <div class="card-body text-center">
+                            <?php if (!empty($item['cover_image'])): ?>
+                                <img src="../<?php echo $item['cover_image']; ?>" class="img-fluid rounded mb-2" alt="Cover">
+                            <?php else: ?>
+                                <p class="text-muted">Belum ada cover.</p>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4 d-grid">
+                        <a href="gallery_photos.php?id=<?php echo $item['id']; ?>" class="btn btn-info">
+                            <i class="fas fa-images me-2"></i>Kelola Foto Album
+                        </a>
                     </div>
                 </div>
             </div>
 
             <div class="mt-4">
-                <button type="submit" name="update_gallery" class="btn btn-primary"><i class="fas fa-save me-2"></i>Simpan Perubahan</button>
+                <button type="submit" name="update_album" class="btn btn-primary"><i class="fas fa-save me-2"></i>Simpan Perubahan</button>
             </div>
         </form>
     </div>

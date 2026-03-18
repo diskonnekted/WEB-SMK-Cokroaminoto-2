@@ -1,3 +1,8 @@
+    <footer class="mt-5 mb-3 text-center text-muted small">
+        <hr>
+        <p class="mb-1">&copy; <?php echo date('Y'); ?> SMK Cokroaminoto 2 Banjarnegara.</p>
+        <p>SmartSchool Lite By <a href="https://www.clasnet.co.id" target="_blank" class="text-decoration-none">Clasnet</a></p>
+    </footer>
     </div>
 </div>
 

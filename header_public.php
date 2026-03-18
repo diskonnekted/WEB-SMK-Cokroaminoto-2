@@ -25,7 +25,7 @@ while ($row = $m_result->fetch_assoc()) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $settings['school_name'] ?? 'SMK Cokroaminoto 2'; ?> <?php echo $settings['school_sub_name'] ?? 'Banjarnegara'; ?></title>
+    <title><?php echo !empty($settings['school_name']) ? $settings['school_name'] : 'SMK Cokroaminoto 2'; ?> <?php echo !empty($settings['school_sub_name']) ? $settings['school_sub_name'] : 'Banjarnegara'; ?></title>
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
@@ -57,8 +57,8 @@ while ($row = $m_result->fetch_assoc()) {
         <div class="container">
             <img src="images/logocokro2.png" alt="Logo SMK Cokroaminoto 2" class="school-logo">
             <div class="logo-text">
-                <h1><?php echo $settings['school_name'] ?? 'SMK COKROAMINOTO 2'; ?></h1>
-                <span><?php echo $settings['school_sub_name'] ?? 'BANJARNEGARA'; ?></span>
+                <h1><?php echo !empty($settings['school_name']) ? $settings['school_name'] : 'SMK COKROAMINOTO 2'; ?></h1>
+                <span><?php echo !empty($settings['school_sub_name']) ? $settings['school_sub_name'] : 'BANJARNEGARA'; ?></span>
             </div>
             
             <!-- Social Media Icons -->
@@ -89,7 +89,22 @@ while ($row = $m_result->fetch_assoc()) {
                         <?php if (isset($child_menus[$menu['id']])): ?>
                         <ul class="submenu">
                             <?php foreach ($child_menus[$menu['id']] as $child): ?>
-                            <li><a href="<?php echo $child['url']; ?>"><?php echo strtoupper($child['label']); ?></a></li>
+                            <li class="<?php echo isset($child_menus[$child['id']]) ? 'has-submenu' : ''; ?>">
+                                <a href="<?php echo $child['url']; ?>">
+                                    <?php echo strtoupper($child['label']); ?>
+                                    <?php if (isset($child_menus[$child['id']])): ?>
+                                        <i class="fas fa-caret-right" style="font-size: 0.8em;"></i>
+                                    <?php endif; ?>
+                                </a>
+                                
+                                <?php if (isset($child_menus[$child['id']])): ?>
+                                <ul class="submenu">
+                                    <?php foreach ($child_menus[$child['id']] as $grandchild): ?>
+                                    <li><a href="<?php echo $grandchild['url']; ?>"><?php echo strtoupper($grandchild['label']); ?></a></li>
+                                    <?php endforeach; ?>
+                                </ul>
+                                <?php endif; ?>
+                            </li>
                             <?php endforeach; ?>
                         </ul>
                         <?php endif; ?>

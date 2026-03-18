@@ -21,7 +21,7 @@ require_once 'header_public.php';
                             <h4 style="color: var(--nu-green); margin-bottom: 15px;"><i class="fas fa-map-marker-alt me-2"></i> Alamat</h4>
                             <p>
                                 <strong>SMK Cokroaminoto 2 Banjarnegara</strong><br>
-                                Jl. Letjend Soeprapto No. 221, Wangon<br>
+                                Jl. Letjend Suprapto No. 221, Wangon<br>
                                 Kec. Banjarnegara, Kab. Banjarnegara<br>
                                 Jawa Tengah 53417
                             </p>
@@ -33,6 +33,55 @@ require_once 'header_public.php';
                                 <i class="fab fa-instagram me-2 text-muted"></i> Instagram: <a href="https://instagram.com/corduba.official" target="_blank" style="color: inherit;">@corduba.official</a><br>
                                 <i class="fab fa-facebook me-2 text-muted"></i> Facebook: <a href="https://www.facebook.com/p/SMK-Cokroaminoto-2-Banjarnegara-100077484438556/" target="_blank" style="color: inherit;">SMK Cokroaminoto 2 Banjarnegara</a>
                             </p>
+                        </div>
+                    </div>
+
+                    <h4 style="color: var(--nu-green); margin-bottom: 15px;"><i class="fas fa-paper-plane me-2"></i> Kirim Pesan / Konsultasi</h4>
+                    <div class="card bg-light mb-5 border-0">
+                        <div class="card-body p-4">
+                            <?php
+                            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                                $name = $conn->real_escape_string($_POST['name']);
+                                $phone = $conn->real_escape_string($_POST['phone']);
+                                $purpose = $conn->real_escape_string($_POST['purpose']);
+                                $message = $conn->real_escape_string($_POST['message']);
+                                
+                                $sql = "INSERT INTO contact_messages (name, phone, purpose, message) VALUES ('$name', '$phone', '$purpose', '$message')";
+                                
+                                if ($conn->query($sql) === TRUE) {
+                                    echo '<div class="alert alert-success">Pesan Anda berhasil dikirim. Kami akan segera menghubungi Anda.</div>';
+                                } else {
+                                    echo '<div class="alert alert-danger">Maaf, terjadi kesalahan saat mengirim pesan. Silakan coba lagi.</div>';
+                                }
+                            }
+                            ?>
+                            <form method="POST" action="">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="name" class="form-label">Nama Lengkap</label>
+                                        <input type="text" class="form-control" id="name" name="name" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="phone" class="form-label">No. HP / WhatsApp</label>
+                                        <input type="tel" class="form-control" id="phone" name="phone" required>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="purpose" class="form-label">Tujuan</label>
+                                    <select class="form-select" id="purpose" name="purpose" required>
+                                        <option value="">Pilih Tujuan...</option>
+                                        <option value="Konsultasi">Konsultasi</option>
+                                        <option value="Mengajukan Pertanyaan">Mengajukan Pertanyaan</option>
+                                        <option value="Mengajukan Saran">Mengajukan Saran</option>
+                                        <option value="Lainnya">Lainnya</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="message" class="form-label">Pesan</label>
+                                    <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-success"><i class="fas fa-paper-plane me-2"></i> Kirim Pesan</button>
+                            </form>
                         </div>
                     </div>
 

@@ -8,20 +8,28 @@ if (isset($_GET['delete'])) {
     echo "<script>window.location.href='index.php';</script>";
 }
 
-// Fetch News
-$news_list = [];
-$result = $conn->query("SELECT * FROM news ORDER BY created_at DESC");
-while ($row = $result->fetch_assoc()) {
-    $news_list[] = $row;
-}
-
 // Stats Counts
 $count_news = $conn->query("SELECT COUNT(*) as total FROM news")->fetch_assoc()['total'];
 $count_pages = $conn->query("SELECT COUNT(*) as total FROM pages")->fetch_assoc()['total'];
 $count_menus = $conn->query("SELECT COUNT(*) as total FROM menus")->fetch_assoc()['total'];
-// Check if users table exists before querying to avoid error if not fully set up, though it should be.
-// Assuming users table exists based on previous context.
 $count_users = $conn->query("SELECT COUNT(*) as total FROM users")->fetch_assoc()['total'];
+
+// Pagination Logic
+$limit = 10;
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+if ($page < 1) $page = 1;
+$offset = ($page - 1) * $limit;
+$total_pages = ceil($count_news / $limit);
+
+// Fetch News with Pagination
+$news_list = [];
+$stmt = $conn->prepare("SELECT * FROM news ORDER BY created_at DESC LIMIT ? OFFSET ?");
+$stmt->bind_param("ii", $limit, $offset);
+$stmt->execute();
+$result = $stmt->get_result();
+while ($row = $result->fetch_assoc()) {
+    $news_list[] = $row;
+}
 ?>
 
 <div class="row mb-4 g-3">
@@ -134,7 +142,7 @@ $count_users = $conn->query("SELECT COUNT(*) as total FROM users")->fetch_assoc(
                     <?php else: ?>
                         <?php foreach ($news_list as $index => $news): ?>
                         <tr>
-                            <td><?php echo $index + 1; ?></td>
+                            <td><?php echo $index + 1 + $offset; ?></td>
                             <td>
                                 <?php 
                                     $img_src = $news['image'];
@@ -167,6 +175,34 @@ $count_users = $conn->query("SELECT COUNT(*) as total FROM users")->fetch_assoc(
                 </tbody>
             </table>
         </div>
+        
+        <!-- Pagination -->
+        <?php if ($total_pages > 1): ?>
+        <nav aria-label="Page navigation" class="mt-4">
+            <ul class="pagination justify-content-center">
+                <!-- Previous Link -->
+                <li class="page-item <?php if($page <= 1) echo 'disabled'; ?>">
+                    <a class="page-link" href="?page=<?php echo $page - 1; ?>" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                
+                <!-- Page Numbers -->
+                <?php for($i = 1; $i <= $total_pages; $i++): ?>
+                <li class="page-item <?php if($page == $i) echo 'active'; ?>">
+                    <a class="page-link" href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                </li>
+                <?php endfor; ?>
+                
+                <!-- Next Link -->
+                <li class="page-item <?php if($page >= $total_pages) echo 'disabled'; ?>">
+                    <a class="page-link" href="?page=<?php echo $page + 1; ?>" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <?php endif; ?>
     </div>
 </div>
 

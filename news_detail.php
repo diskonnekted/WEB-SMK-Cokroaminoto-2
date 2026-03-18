@@ -5,7 +5,7 @@ $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 $news_item = null;
 
 if ($id > 0) {
-    $stmt = $conn->prepare("SELECT * FROM news WHERE id = ?");
+    $stmt = $conn->prepare("SELECT news.*, users.full_name as author_name FROM news LEFT JOIN users ON news.author_id = users.id WHERE news.id = ?");
     $stmt->bind_param("i", $id);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -41,6 +41,8 @@ function getYoutubeId($url) {
                         <h1 class="mb-2" style="color: var(--nu-green);"><?php echo $news_item['title']; ?></h1>
                         <div class="text-muted small">
                             <i class="far fa-calendar-alt me-1"></i> <?php echo indo_date($news_item['created_at']); ?>
+                            <span class="mx-2">•</span>
+                            <i class="fas fa-user-edit me-1"></i> <?php echo htmlspecialchars($news_item['author_name'] ?? 'Admin'); ?>
                         </div>
                     </div>
                     

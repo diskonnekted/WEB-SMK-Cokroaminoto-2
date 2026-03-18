@@ -1,36 +1,45 @@
 <?php
 require_once 'header.php';
 
-// Handle Delete
+// Handle Delete Album
 if (isset($_GET['delete'])) {
     $id = intval($_GET['delete']);
     
-    // Get image path to delete file
-    $sql = "SELECT image_path FROM gallery WHERE id = $id";
+    // Get all photos in this album to delete files
+    $sql = "SELECT image_path FROM gallery_photos WHERE album_id = $id";
     $result = $conn->query($sql);
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
+    while ($row = $result->fetch_assoc()) {
         $file_path = '../' . $row['image_path'];
         if (file_exists($file_path)) {
             unlink($file_path);
         }
     }
     
-    $conn->query("DELETE FROM gallery WHERE id = $id");
+    // Delete photos record
+    $conn->query("DELETE FROM gallery_photos WHERE album_id = $id");
+    
+    // Delete album record
+    $conn->query("DELETE FROM gallery_albums WHERE id = $id");
+    
     echo "<script>window.location.href='gallery.php';</script>";
 }
 
-// Fetch Gallery Items
-$gallery_items = [];
-$result = $conn->query("SELECT * FROM gallery ORDER BY created_at DESC");
+// Fetch Albums
+$albums = [];
+$result = $conn->query("SELECT * FROM gallery_albums ORDER BY created_at DESC");
 while ($row = $result->fetch_assoc()) {
-    $gallery_items[] = $row;
+    // Count photos
+    $id = $row['id'];
+    $count_res = $conn->query("SELECT COUNT(*) as total FROM gallery_photos WHERE album_id = $id");
+    $count_row = $count_res->fetch_assoc();
+    $row['photo_count'] = $count_row['total'];
+    $albums[] = $row;
 }
 ?>
 
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2 class="h3 mb-0 text-gray-800">Manajemen Galeri</h2>
-    <a href="gallery_create.php" class="btn btn-success"><i class="fas fa-plus me-2"></i>Tambah Foto</a>
+    <h2 class="h3 mb-0 text-gray-800">Manajemen Album Galeri</h2>
+    <a href="gallery_create.php" class="btn btn-success"><i class="fas fa-plus me-2"></i>Buat Album Baru</a>
 </div>
 
 <div class="card shadow mb-4">
@@ -40,31 +49,40 @@ while ($row = $result->fetch_assoc()) {
                 <thead class="table-light">
                     <tr>
                         <th width="5%">No</th>
-                        <th width="15%">Foto</th>
-                        <th width="20%">Judul</th>
+                        <th width="15%">Cover</th>
+                        <th width="25%">Judul Album</th>
                         <th width="15%">Kategori</th>
-                        <th width="30%">Deskripsi</th>
-                        <th width="15%">Aksi</th>
+                        <th width="10%">Foto</th>
+                        <th width="30%">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php if (empty($gallery_items)): ?>
+                    <?php if (empty($albums)): ?>
                     <tr>
-                        <td colspan="6" class="text-center py-4 text-muted">Belum ada data galeri.</td>
+                        <td colspan="6" class="text-center py-4 text-muted">Belum ada album galeri.</td>
                     </tr>
                     <?php else: ?>
-                        <?php $no = 1; foreach ($gallery_items as $item): ?>
+                        <?php $no = 1; foreach ($albums as $item): ?>
                         <tr>
                             <td><?php echo $no++; ?></td>
                             <td>
-                                <img src="../<?php echo $item['image_path']; ?>" alt="Thumb" class="img-thumbnail" style="height: 60px; width: 60px; object-fit: cover;">
+                                <?php if (!empty($item['cover_image'])): ?>
+                                <img src="../<?php echo $item['cover_image']; ?>" alt="Cover" class="img-thumbnail" style="height: 60px; width: 60px; object-fit: cover;">
+                                <?php else: ?>
+                                <span class="text-muted small">No Cover</span>
+                                <?php endif; ?>
                             </td>
-                            <td><?php echo htmlspecialchars($item['title']); ?></td>
-                            <td><span class="badge bg-info"><?php echo htmlspecialchars($item['category']); ?></span></td>
-                            <td><?php echo substr(htmlspecialchars($item['description']), 0, 50) . '...'; ?></td>
                             <td>
-                                <a href="gallery_edit.php?id=<?php echo $item['id']; ?>" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
-                                <a href="gallery.php?delete=<?php echo $item['id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus foto ini?')"><i class="fas fa-trash"></i></a>
+                                <strong><?php echo htmlspecialchars($item['title']); ?></strong>
+                                <br>
+                                <small class="text-muted"><?php echo substr(htmlspecialchars($item['description']), 0, 50); ?></small>
+                            </td>
+                            <td><span class="badge bg-info"><?php echo htmlspecialchars($item['category']); ?></span></td>
+                            <td class="text-center"><span class="badge bg-secondary"><?php echo $item['photo_count']; ?> Foto</span></td>
+                            <td>
+                                <a href="gallery_photos.php?id=<?php echo $item['id']; ?>" class="btn btn-info btn-sm mb-1"><i class="fas fa-images me-1"></i> Kelola Foto</a>
+                                <a href="gallery_edit.php?id=<?php echo $item['id']; ?>" class="btn btn-warning btn-sm mb-1"><i class="fas fa-edit"></i> Edit Info</a>
+                                <a href="gallery.php?delete=<?php echo $item['id']; ?>" class="btn btn-danger btn-sm mb-1" onclick="return confirm('Yakin ingin menghapus album ini beserta seluruh fotonya?')"><i class="fas fa-trash"></i></a>
                             </td>
                         </tr>
                         <?php endforeach; ?>

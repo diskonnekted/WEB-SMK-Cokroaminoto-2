@@ -9,12 +9,118 @@ require_once 'header.php';
 <div class="row">
     <div class="col-lg-12">
 
-        <!-- Panduan Mengelola Berita & Artikel -->
-        <div class="card shadow mb-4">
-            <div class="card-header py-3 bg-info text-white">
-                <h6 class="m-0 font-weight-bold"><i class="fas fa-newspaper me-2"></i>Panduan Mengelola Berita & Artikel (Termasuk Gambar & Video)</h6>
-            </div>
+        <!-- Analisa Sistem & Fitur Website -->
+        <div class="card shadow-sm border-0 mb-4">
             <div class="card-body">
+                <h5 class="fw-bold mb-4 text-primary"><i class="fas fa-info-circle me-2"></i>Tentang Sistem & Fitur Website</h5>
+                <p>Website SMK Cokroaminoto 2 Banjarnegara (SmartSchool Lite) adalah sistem informasi sekolah berbasis web yang dirancang untuk mempublikasikan informasi sekolah kepada masyarakat luas serta memudahkan manajemen konten bagi administrator.</p>
+
+                <hr>
+
+                <h5 class="text-primary font-weight-bold">1. Fitur Utama (Halaman Publik)</h5>
+                <p>Halaman yang dapat diakses oleh pengunjung umum (wali murid, calon siswa, masyarakat).</p>
+                <div class="row">
+                    <div class="col-md-6">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <i class="fas fa-home text-primary me-2"></i> <strong>Beranda (Home):</strong>
+                                <br><small class="text-muted">Menampilkan slider banner, sambutan kepala sekolah, berita unggulan, dan berita terbaru.</small>
+                            </li>
+                            <li class="list-group-item">
+                                <i class="fas fa-newspaper text-primary me-2"></i> <strong>Berita & Artikel:</strong>
+                                <br><small class="text-muted">Daftar berita kegiatan sekolah, prestasi, dan pengumuman dengan fitur pencarian dan kategori.</small>
+                            </li>
+                            <li class="list-group-item">
+                                <i class="fas fa-file-alt text-primary me-2"></i> <strong>Halaman Profil (Statis):</strong>
+                                <br><small class="text-muted">Halaman informasi tetap seperti Sejarah, Visi Misi, Struktur Organisasi, dan Kompetensi Keahlian.</small>
+                            </li>
+                            <li class="list-group-item">
+                                <i class="fas fa-images text-primary me-2"></i> <strong>Galeri Foto:</strong>
+                                <br><small class="text-muted">Dokumentasi kegiatan sekolah yang dikelompokkan dalam album-album foto.</small>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <i class="fas fa-user-graduate text-primary me-2"></i> <strong>Data Alumni & BKK:</strong>
+                                <br><small class="text-muted">Informasi data alumni dan lowongan kerja (Bursa Kerja Khusus) terbaru.</small>
+                            </li>
+                            <li class="list-group-item">
+                                <i class="fas fa-calendar-alt text-primary me-2"></i> <strong>Kalender Akademik:</strong>
+                                <br><small class="text-muted">Agenda kegiatan sekolah interaktif yang dapat dilihat per bulan.</small>
+                            </li>
+                            <li class="list-group-item">
+                                <i class="fas fa-user-plus text-primary me-2"></i> <strong>Info PPDB:</strong>
+                                <br><small class="text-muted">Informasi Penerimaan Peserta Didik Baru.</small>
+                            </li>
+                            <li class="list-group-item">
+                                <i class="fas fa-envelope text-primary me-2"></i> <strong>Kontak Kami:</strong>
+                                <br><small class="text-muted">Formulir untuk mengirim pesan, saran, atau pertanyaan ke pihak sekolah.</small>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <hr class="my-4">
+
+                <h5 class="text-primary font-weight-bold">2. Fitur Dasbor Admin</h5>
+                <p>Pusat kontrol bagi pengelola website untuk memperbarui konten.</p>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th width="25%">Menu Admin</th>
+                                <th>Fungsi & Kegunaan</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><i class="fas fa-newspaper me-2"></i> Berita & Artikel</td>
+                                <td>Menulis, mengedit, dan menghapus berita. Mendukung upload gambar thumbnail dan penyisipan video/gambar dalam artikel.</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-file-alt me-2"></i> Halaman Statis</td>
+                                <td>Membuat halaman yang isinya jarang berubah (Profil, Visi Misi). Isi halaman bisa diedit kapan saja.</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-bars me-2"></i> Menu Navigasi</td>
+                                <td>Mengatur susunan menu yang tampil di bagian atas website (Header). Mendukung pembuatan Sub-Menu (Dropdown).</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-images me-2"></i> Galeri Foto</td>
+                                <td>Membuat Album Galeri dan mengupload banyak foto sekaligus ke dalam album tersebut.</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-calendar-alt me-2"></i> Kalender Akademik</td>
+                                <td>Menambah agenda kegiatan sekolah yang akan tampil di halaman Kalender publik.</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-briefcase me-2"></i> BKK / Lowongan</td>
+                                <td>Memposting info lowongan kerja yang akan tampil di halaman Alumni/BKK.</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-envelope me-2"></i> Pesan Masuk</td>
+                                <td>Melihat dan membalas pesan yang dikirim pengunjung melalui halaman Kontak.</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-cog me-2"></i> Pengaturan</td>
+                                <td>Mengganti Identitas Sekolah (Nama, Alamat, Telp), Logo Header/Footer, dan Banner Slider halaman depan.</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-database me-2"></i> Backup Artikel</td>
+                                <td>Mencadangkan data artikel berita (Download JSON) dan memulihkannya (Restore) jika diperlukan.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Panduan Mengelola Berita & Artikel -->
+        <div class="card shadow-sm border-0 mb-4">
+            <div class="card-body">
+                <h5 class="fw-bold mb-4 text-info"><i class="fas fa-newspaper me-2"></i>Panduan Mengelola Berita & Artikel (Termasuk Gambar & Video)</h5>
                 <p>Fitur ini digunakan untuk memposting berita sekolah, pengumuman, prestasi siswa, atau artikel lainnya.</p>
 
                 <h5 class="mt-4 mb-3 text-info">Langkah 1: Membuat Berita Baru</h5>
@@ -61,11 +167,9 @@ require_once 'header.php';
         </div>
         
         <!-- Panduan Membuat Sub Menu -->
-        <div class="card shadow mb-4">
-            <div class="card-header py-3 bg-success text-white">
-                <h6 class="m-0 font-weight-bold"><i class="fas fa-sitemap me-2"></i>Panduan Membuat Sub Menu Navigasi</h6>
-            </div>
+        <div class="card shadow-sm border-0 mb-4">
             <div class="card-body">
+                <h5 class="fw-bold mb-4 text-success"><i class="fas fa-sitemap me-2"></i>Panduan Membuat Sub Menu Navigasi</h5>
                 <p>Sub menu (Drop Down) adalah menu yang muncul ketika pengunjung mengarahkan kursor ke menu utama. Berikut langkah-langkah membuatnya:</p>
 
                 <div class="alert alert-info">
@@ -150,11 +254,9 @@ require_once 'header.php';
         </div>
 
         <!-- Panduan Membuat Halaman Statis -->
-        <div class="card shadow mb-4 mt-4">
-            <div class="card-header py-3 bg-primary text-white">
-                <h6 class="m-0 font-weight-bold"><i class="fas fa-file-alt me-2"></i>Panduan Membuat Halaman Statis</h6>
-            </div>
+        <div class="card shadow-sm border-0 mb-4 mt-4">
             <div class="card-body">
+                <h5 class="fw-bold mb-4 text-primary"><i class="fas fa-file-alt me-2"></i>Panduan Membuat Halaman Statis</h5>
                 <p>Halaman statis digunakan untuk konten yang jarang berubah, seperti Profil Sekolah, Visi Misi, Sejarah, atau penjelasan Jurusan/Kompetensi Keahlian.</p>
 
                 <h5 class="mt-4 mb-3 text-primary">Langkah-langkah Membuat Halaman Baru:</h5>

@@ -153,8 +153,13 @@ if (!isset($_SESSION['user_id'])) {
                 </a>
             </li>
             <li>
-                <a href="gallery.php" class="<?php echo strpos(basename($_SERVER['PHP_SELF']), 'gallery') !== false ? 'active' : ''; ?>">
+                <a href="gallery.php" class="<?php echo strpos(basename($_SERVER['PHP_SELF']), 'gallery') !== false && strpos(basename($_SERVER['PHP_SELF']), 'spmb') === false ? 'active' : ''; ?>">
                     <i class="fas fa-images"></i> <span>Galeri Foto</span>
+                </a>
+            </li>
+            <li>
+                <a href="spmb_gallery.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'spmb_gallery.php' ? 'active' : ''; ?>">
+                    <i class="fas fa-bullhorn"></i> <span>Galeri SPMB</span>
                 </a>
             </li>
             <li>
@@ -188,6 +193,16 @@ if (!isset($_SESSION['user_id'])) {
                 </a>
             </li>
             <li>
+                <a href="messages.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'messages.php' ? 'active' : ''; ?>">
+                    <i class="fas fa-envelope"></i> <span>Pesan Masuk</span>
+                </a>
+            </li>
+            <li>
+                <a href="backup_news.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'backup_news.php' ? 'active' : ''; ?>">
+                    <i class="fas fa-database"></i> <span>Backup Artikel</span>
+                </a>
+            </li>
+            <li>
                 <a href="calendar.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'calendar.php' ? 'active' : ''; ?>">
                     <i class="fas fa-calendar-alt"></i> <span>Kalender Akademik</span>
                 </a>
@@ -197,10 +212,14 @@ if (!isset($_SESSION['user_id'])) {
         <div class="mt-auto pt-3 border-top border-secondary">
             <div class="dropdown">
                 <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle text-light" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                    <div class="bg-success rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 32px; height: 32px;">
-                        <i class="fas fa-user text-white small"></i>
-                    </div>
-                    <strong><?php echo $_SESSION['username']; ?></strong>
+                    <?php if (isset($_SESSION['avatar']) && !empty($_SESSION['avatar']) && file_exists('../uploads/avatars/' . $_SESSION['avatar'])): ?>
+                        <img src="../uploads/avatars/<?php echo $_SESSION['avatar']; ?>" alt="Avatar" class="rounded-circle me-2" style="width: 32px; height: 32px; object-fit: cover;">
+                    <?php else: ?>
+                        <div class="bg-success rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 32px; height: 32px;">
+                            <i class="fas fa-user text-white small"></i>
+                        </div>
+                    <?php endif; ?>
+                    <strong><?php echo !empty($_SESSION['full_name']) ? $_SESSION['full_name'] : $_SESSION['username']; ?></strong>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
                     <li><a class="dropdown-item" href="profile.php"><i class="fas fa-user-edit me-2"></i> Edit Profil</a></li>

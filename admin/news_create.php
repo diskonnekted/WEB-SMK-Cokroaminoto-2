@@ -53,8 +53,11 @@ if (isset($_POST['save_news'])) {
     }
 
     if (!isset($error)) {
+        // Get Author ID from Session
+        $author_id = isset($_SESSION['user_id']) ? intval($_SESSION['user_id']) : 1;
+
         // Insert News
-        $sql = "INSERT INTO news (title, slug, category, image, content, is_featured, youtube_url) VALUES ('$title', '$slug', '$category', '$image_url', '$content', $is_featured, '$youtube_url')";
+        $sql = "INSERT INTO news (title, slug, category, image, content, is_featured, youtube_url, author_id) VALUES ('$title', '$slug', '$category', '$image_url', '$content', $is_featured, '$youtube_url', $author_id)";
         
         if ($conn->query($sql)) {
             $news_id = $conn->insert_id;

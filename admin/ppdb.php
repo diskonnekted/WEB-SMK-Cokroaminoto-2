@@ -27,7 +27,10 @@ while ($row = $result->fetch_assoc()) {
 
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h2>Manajemen Pendaftaran PPDB</h2>
-    <a href="ppdb_export.php" class="btn btn-success"><i class="fas fa-file-excel me-2"></i>Export Excel</a>
+    <div>
+        <a href="ppdb_create.php" class="btn btn-primary me-2"><i class="fas fa-plus me-2"></i>Tambah Data</a>
+        <a href="ppdb_export.php" class="btn btn-success"><i class="fas fa-file-excel me-2"></i>Export Excel</a>
+    </div>
 </div>
 
 <div class="card shadow-sm">
@@ -36,12 +39,12 @@ while ($row = $result->fetch_assoc()) {
             <table class="table table-hover align-middle">
                 <thead class="table-light">
                     <tr>
-                        <th>Tanggal</th>
+                        <th>ID</th>
                         <th>Nama Lengkap</th>
+                        <th>Kecamatan</th>
                         <th>Asal Sekolah</th>
-                        <th>Pilihan Jurusan</th>
-                        <th>Nilai Rata-rata</th>
-                        <th>No. WA Ortu</th>
+                        <th>Jurusan</th>
+                        <th>Status</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -53,15 +56,34 @@ while ($row = $result->fetch_assoc()) {
                     <?php else: ?>
                         <?php foreach ($registrations as $reg): ?>
                         <tr>
-                            <td><?php echo date('d/m/Y H:i', strtotime($reg['created_at'])); ?></td>
+                            <td>#<?php echo $reg['id']; ?></td>
                             <td class="fw-bold"><?php echo htmlspecialchars($reg['full_name']); ?></td>
+                            <td><?php echo !empty($reg['district']) ? htmlspecialchars($reg['district']) : '-'; ?></td>
                             <td><?php echo htmlspecialchars($reg['origin_school']); ?></td>
-                            <td><span class="badge bg-primary"><?php echo htmlspecialchars($reg['major']); ?></span></td>
-                            <td><span class="fw-bold text-dark"><?php echo number_format($reg['grade_average'], 2); ?></span></td>
-                            <td><?php echo htmlspecialchars($reg['parent_phone']); ?></td>
+                            <td><span class="badge bg-secondary"><?php echo htmlspecialchars($reg['major']); ?></span></td>
                             <td>
-                                <a href="ppdb_detail.php?id=<?php echo $reg['id']; ?>" class="btn btn-sm btn-info text-white me-1" title="Lihat Detail"><i class="fas fa-eye"></i></a>
-                                <a href="ppdb.php?delete=<?php echo $reg['id']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin menghapus data ini?')" title="Hapus"><i class="fas fa-trash"></i></a>
+                                <?php
+                                $status_class = 'secondary';
+                                $status_text = htmlspecialchars($reg['status'] ?? 'Pendaftar Baru');
+                                
+                                if (stripos($status_text, 'Diterima') !== false && stripos($status_text, 'Tidak') === false) {
+                                    $status_class = 'success';
+                                } elseif (stripos($status_text, 'Tidak Diterima') !== false) {
+                                    $status_class = 'danger';
+                                } elseif (stripos($status_text, 'Proses') !== false) {
+                                    $status_class = 'warning text-dark';
+                                } else {
+                                    $status_class = 'info text-dark';
+                                }
+                                ?>
+                                <span class="badge bg-<?php echo $status_class; ?>"><?php echo $status_text; ?></span>
+                            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <a href="ppdb_detail.php?id=<?php echo $reg['id']; ?>" class="btn btn-sm btn-info text-white" title="Detail"><i class="fas fa-eye"></i></a>
+                                    <a href="ppdb_edit.php?id=<?php echo $reg['id']; ?>" class="btn btn-sm btn-warning text-dark" title="Edit"><i class="fas fa-edit"></i></a>
+                                    <a href="ppdb.php?delete=<?php echo $reg['id']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin menghapus data ini?')" title="Hapus"><i class="fas fa-trash"></i></a>
+                                </div>
                             </td>
                         </tr>
                         <?php endforeach; ?>

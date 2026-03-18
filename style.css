@@ -142,6 +142,20 @@ ul {
     border-bottom: none;
 }
 
+/* Nested Submenu (Level 3+) */
+.main-nav ul.submenu ul.submenu {
+    top: 0;
+    left: 100%;
+    margin-top: -5px; /* Adjust slightly if needed */
+}
+
+/* Ensure arrow rotation or spacing if needed */
+.main-nav li.has-submenu > a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .main-nav ul.submenu a {
     padding: 12px 20px;
     font-size: 0.9rem;

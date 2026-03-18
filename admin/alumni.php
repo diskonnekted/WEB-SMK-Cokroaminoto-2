@@ -35,6 +35,7 @@ while ($row = $result->fetch_assoc()) {
         <a href="alumni.php" class="btn btn-outline-secondary <?php echo $status_filter == '' ? 'active' : ''; ?>">Semua</a>
         <a href="alumni.php?status=pending" class="btn btn-outline-warning <?php echo $status_filter == 'pending' ? 'active' : ''; ?>">Pending</a>
         <a href="alumni.php?status=approved" class="btn btn-outline-success <?php echo $status_filter == 'approved' ? 'active' : ''; ?>">Disetujui</a>
+        <a href="alumni_export.php?status=<?php echo htmlspecialchars($status_filter); ?>" class="btn btn-success ms-2" target="_blank"><i class="fas fa-file-excel"></i> Export Excel</a>
     </div>
 </div>
 
@@ -46,8 +47,8 @@ while ($row = $result->fetch_assoc()) {
                     <tr>
                         <th>No</th>
                         <th>Tanggal Daftar</th>
-                        <th>Nama</th>
-                        <th>Tahun Lulus</th>
+                        <th>Identitas (NIK & Nama)</th>
+                        <th>Lulusan</th>
                         <th>Kontak</th>
                         <th>Pekerjaan</th>
                         <th>Status</th>
@@ -65,9 +66,13 @@ while ($row = $result->fetch_assoc()) {
                         <td><?php echo date('d/m/Y H:i', strtotime($row['created_at'])); ?></td>
                         <td>
                             <strong><?php echo htmlspecialchars($row['name']); ?></strong><br>
+                            <small class="text-muted">NIK: <?php echo !empty($row['nik']) ? htmlspecialchars($row['nik']) : '-'; ?></small><br>
                             <small class="text-muted"><?php echo htmlspecialchars($row['address']); ?></small>
                         </td>
-                        <td><?php echo htmlspecialchars($row['graduation_year']); ?></td>
+                        <td>
+                            <?php echo htmlspecialchars($row['graduation_year']); ?><br>
+                            <small class="text-muted"><?php echo !empty($row['major']) ? htmlspecialchars($row['major']) : '-'; ?></small>
+                        </td>
                         <td>
                             <i class="fas fa-phone small text-muted"></i> <?php echo htmlspecialchars($row['phone']); ?><br>
                             <i class="fas fa-envelope small text-muted"></i> <?php echo htmlspecialchars($row['email']); ?>

@@ -7,18 +7,17 @@
                     <img src="images/logocokro2.png" alt="Logo SMK Cokroaminoto 2" style="max-width: 120px; height: auto; display: block;">
                 </div>
                 <h3>SMK Cokroaminoto 2</h3>
-                <p>Mencetak lulusan yang kompeten, berakhlak mulia, dan siap kerja. Sekolah berbasis nilai-nilai keislaman dan kebangsaan.</p>
+                <p>Terwujudnya Generasi Muslim Unggulan yang Mandiri dan Berdaya Saing</p>
                 <br>
                 <p><strong>Alamat:</strong><br><?php echo isset($settings['address']) ? $settings['address'] : 'Alamat Sekolah'; ?></p>
             </div>
             <div class="footer-col">
                 <h3>Tautan Cepat</h3>
                 <ul class="footer-links">
-                    <li><a href="page.php?slug=profil">Profil Sekolah</a></li>
-                    <li><a href="page.php?slug=kompetensi-keahlian">Kompetensi Keahlian</a></li>
-                    <li><a href="page.php?slug=prestasi">Prestasi</a></li>
-                    <li><a href="page.php?slug=ekstrakurikuler">Ekstrakurikuler</a></li>
+                    <li><a href="page.php?slug=profil">Profil</a></li>
                     <li><a href="gallery.php">Galeri</a></li>
+                    <li><a href="bkk.php">BKK Alumni</a></li>
+                    <li><a href="ppdb.php">SPMB Online</a></li>
                 </ul>
             </div>
             <div class="footer-col">
@@ -36,6 +35,7 @@
         </div>
         <div class="footer-bottom">
             <p>&copy; <?php echo date('Y'); ?> SMK Cokroaminoto 2 Banjarnegara. All Rights Reserved.</p>
+            <p class="mb-0 small" style="margin-top: 5px;">SmartSchool Lite By <a href="https://www.clasnet.co.id" target="_blank" style="color: #fff; text-decoration: none;">Clasnet</a></p>
         </div>
     </div>
 </footer>
