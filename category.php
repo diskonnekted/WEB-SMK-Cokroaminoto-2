@@ -21,8 +21,17 @@ if (!$category) {
 require_once 'header_public.php';
 
 // Fetch News for this Category
-$stmt = $conn->prepare("SELECT news.*, users.full_name as author_name FROM news LEFT JOIN users ON news.author_id = users.id WHERE category = ? ORDER BY news.created_at DESC");
-$stmt->bind_param("s", $category['name']);
+if ($category['slug'] === 'ekstrakurikuler') {
+    // If parent Ekstrakurikuler, fetch news from all sub-categories (IDs >= 20) plus the parent itself
+    $stmt = $conn->prepare("SELECT news.*, users.full_name as author_name FROM news 
+                            LEFT JOIN users ON news.author_id = users.id 
+                            WHERE category = 'Ekstrakurikuler' 
+                            OR category IN (SELECT name FROM categories WHERE id >= 20)
+                            ORDER BY news.created_at DESC");
+} else {
+    $stmt = $conn->prepare("SELECT news.*, users.full_name as author_name FROM news LEFT JOIN users ON news.author_id = users.id WHERE category = ? ORDER BY news.created_at DESC");
+    $stmt->bind_param("s", $category['name']);
+}
 $stmt->execute();
 $news_result = $stmt->get_result();
 ?>

@@ -23,8 +23,38 @@
                 ['table', ['table']],
                 ['insert', ['link', 'picture', 'video']],
                 ['view', ['fullscreen', 'codeview', 'help']]
-            ]
+            ],
+            callbacks: {
+                onImageUpload: function(files) {
+                    for (let i = 0; i < files.length; i++) {
+                        uploadImage(files[i]);
+                    }
+                }
+            }
         });
+
+        function uploadImage(file) {
+            let data = new FormData();
+            data.append("image", file);
+            $.ajax({
+                url: "upload_handler.php",
+                cache: false,
+                contentType: false,
+                processData: false,
+                data: data,
+                type: "POST",
+                success: function(url) {
+                    // Prepend parent directory if needed (depending on where the page is)
+                    // But usually, relative to root is better if base href is set.
+                    // For now, assume url returned is correct.
+                    $('.summernote').summernote('insertImage', '../' + url);
+                },
+                error: function(data) {
+                    console.log(data);
+                    alert("Gagal mengupload gambar.");
+                }
+            });
+        }
     });
 </script>
 </body>

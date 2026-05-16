@@ -11,3 +11,8 @@ thumbs.db
 temp_*.php
 update_log.txt
 tmp/
+public_html.zip
+backups/
+*.sql
+*.zip
+*.gz

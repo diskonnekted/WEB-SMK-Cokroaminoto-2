@@ -19,6 +19,32 @@ while ($row = $m_result->fetch_assoc()) {
         $child_menus[$row['parent_id']][] = $row;
     }
 }
+
+// Dynamic Extracurricular Submenus
+// We look for the menu item labeled 'EKSTRAKURIKULER' and inject categories as submenus
+foreach ($parent_menus as &$pm) {
+    if (strtoupper($pm['label']) === 'EKSTRAKURIKULER') {
+        // Fetch categories that are likely extracurriculars (IDs 20-34 in this DB)
+        // Or we can just fetch categories that have 'type=news' and are not the main ones
+        $ekskul_res = $conn->query("SELECT name, slug FROM categories WHERE type = 'news' AND id >= 20 ORDER BY name ASC");
+        
+        // Clear existing manual submenus if we want it fully dynamic, 
+        // or just append. Let's append unique ones.
+        $existing_labels = isset($child_menus[$pm['id']]) ? array_column($child_menus[$pm['id']], 'label') : [];
+        
+        while ($cat = $ekskul_res->fetch_assoc()) {
+            if (!in_array($cat['name'], $existing_labels)) {
+                $child_menus[$pm['id']][] = [
+                    'id' => 'cat_' . $cat['slug'],
+                    'label' => $cat['name'],
+                    'url' => 'category.php?slug=' . $cat['slug'],
+                    'parent_id' => $pm['id']
+                ];
+            }
+        }
+    }
+}
+unset($pm);
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -38,11 +64,7 @@ while ($row = $m_result->fetch_assoc()) {
     <div class="header-top">
         <div class="container">
             <div class="date-display">
-                <?php
-                setlocale(LC_TIME, 'id_ID.utf8', 'Indonesian_indonesia.1252');
-                $date = strftime("%A, %d %B %Y");
-                echo ($date === false) ? date('l, d F Y') : $date;
-                ?>
+                <?php echo indo_date(date('Y-m-d')); ?>
             </div>
             <div class="top-links">
                 <a href="contact.php">Kontak Kami</a>
@@ -51,6 +73,13 @@ while ($row = $m_result->fetch_assoc()) {
             </div>
         </div>
     </div>
+
+    <!-- Mobile Detection & Redirection -->
+    <script>
+    if (window.innerWidth <= 768 && !window.location.href.includes('mobile.php')) {
+        window.location.href = 'mobile.php';
+    }
+    </script>
 
     <!-- Logo Section -->
     <div class="logo-section">
