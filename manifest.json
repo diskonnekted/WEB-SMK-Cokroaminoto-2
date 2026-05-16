@@ -1,0 +1,23 @@
+{
+  "name": "SMK Cokroaminoto 2 Banjarnegara",
+  "short_name": "CORDUBA",
+  "description": "Website Resmi SMK Cokroaminoto 2 Banjarnegara",
+  "start_url": "/mobile.php",
+  "display": "standalone",
+  "background_color": "#008f4c",
+  "theme_color": "#008f4c",
+  "icons": [
+    {
+      "src": "images/logocokro2.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "images/logocokro2.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -237,6 +237,9 @@ while($row = $res_e->fetch_assoc()) $events[] = $row;
             object-fit: cover;
         }
     </style>
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#008f4c">
 </head>
 <body>
 
@@ -246,7 +249,9 @@ while($row = $res_e->fetch_assoc()) $events[] = $row;
             <h1>CORDUBA MOBILE</h1>
         </div>
         <div class="header-actions">
-            <i class="fa-regular fa-bell fs-5"></i>
+            <button id="installPwaBtn" class="btn btn-sm btn-light rounded-pill px-3" style="display: none; font-size: 10px; font-weight: bold; color: var(--primary);">
+                INSTALL
+            </button>
         </div>
     </header>
 
@@ -424,6 +429,52 @@ while($row = $res_e->fetch_assoc()) $events[] = $row;
             // Scroll to top
             window.scrollTo(0, 0);
         }
+    </script>
+    <script>
+        // PWA Implementation
+        let deferredPrompt;
+        const installBtn = document.getElementById('installPwaBtn');
+
+        // Register Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('service-worker.js')
+                    .then(reg => console.log('SW Registered'))
+                    .catch(err => console.log('SW Registration Failed', err));
+            });
+        }
+
+        // Handle Installation Prompt
+        window.addEventListener('beforeinstallprompt', (e) => {
+            // Prevent Chrome 67 and earlier from automatically showing the prompt
+            e.preventDefault();
+            // Stash the event so it can be triggered later.
+            deferredPrompt = e;
+            // Update UI to notify the user they can add to home screen
+            installBtn.style.display = 'block';
+
+            installBtn.addEventListener('click', () => {
+                // hide our install button
+                installBtn.style.display = 'none';
+                // Show the prompt
+                deferredPrompt.prompt();
+                // Wait for the user to respond to the prompt
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('User accepted the PWA prompt');
+                    } else {
+                        console.log('User dismissed the PWA prompt');
+                    }
+                    deferredPrompt = null;
+                });
+            });
+        });
+
+        // Hide button if already installed
+        window.addEventListener('appinstalled', () => {
+            installBtn.style.display = 'none';
+            console.log('PWA installed');
+        });
     </script>
 </body>
 </html>
