@@ -1,6 +1,24 @@
 <?php
 // Quran in Text and Audio Plugin (Standalone Implementation)
 ?>
+<!-- Add Google Fonts for Arabic -->
+<link href="https://fonts.googleapis.com/css2?family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lateef&display=swap" rel="stylesheet">
+
+<style>
+    .arabic-text {
+        font-family: 'Scheherazade New', serif;
+        direction: rtl;
+        unicode-bidi: embed;
+    }
+    
+    .bismillah {
+        font-family: 'Scheherazade New', serif;
+        font-size: 2.5rem;
+        color: #198754;
+    }
+</style>
+
 <div class="container mt-4">
     <div class="row">
         <!-- Sidebar: Surah List -->
@@ -108,7 +126,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Bismillah handling (except Surah 1 and 9)
         if (arabicData.number !== 1 && arabicData.number !== 9) {
             html += `
-                <div class="text-center mb-4" style="font-family: 'Amiri', serif; font-size: 2rem;">
+                <div class="text-center mb-4 bismillah">
                     بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ
                 </div>
                 <hr>
@@ -134,7 +152,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             <i class="bi bi-play-fill"></i> Play
                         </button>
                     </div>
-                    <div class="text-end mb-3" style="font-family: 'Amiri', serif; font-size: 1.8rem; line-height: 2.2;">
+                    <div class="text-end mb-3 arabic-text" style="font-size: 2.2rem; line-height: 2.5;">
                         ${arabicText}
                     </div>
                     <div class="text-start text-muted" style="font-size: 1rem;">
@@ -192,7 +210,5 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
-<!-- Add Google Font for Arabic -->
-<link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
 <!-- Add Bootstrap Icons -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
